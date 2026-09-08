@@ -8,8 +8,6 @@ It is intended for experimenting with Panda3D workflows, learning, prototyping a
 
 This is a POC rather than a commercial engine or a replacement for Panda3D itself.
 
-> **0.4.36 stability note:** editor shutdown is bounded and diagnostic. If Panda/graphics cleanup stalls after heavy texture, lighting or physics work, the isolated viewport process is terminated rather than being allowed to hold the desktop application open indefinitely.
-
 ## Features at a glance
 
 - Scene Outliner with hierarchy, grouping, multi-select, duplicate/delete/reparent and transform gizmos.
@@ -27,6 +25,18 @@ This is a POC rather than a commercial engine or a replacement for Panda3D itsel
 - Play Mode, Output/Problems workflow, validation, project templates and standalone/export tooling.
 
 For the full development history, see [`HISTORY_CHANGELOG.md`](HISTORY_CHANGELOG.md).
+
+## Screenshots
+![Basic](images/basic.png)
+![Scripting Editor](images/Scripting_editor.png)
+![Component Options](images/add_component_options.png)
+![UsingSimplePbr0](images/screenshot.png)
+![UsingSimplePbr1](images/using_simple_pbr.png)
+![HUD Editor](images/HUD_UI_Editor.png)
+![HUD Preview](images/HUD_UI_output.png)
+![API Docs](images/API_documentation.png)
+![VFX](images/Particle_editor.png)
+![Exporting](images/Exporting.png)
 
 ## Requirements
 
