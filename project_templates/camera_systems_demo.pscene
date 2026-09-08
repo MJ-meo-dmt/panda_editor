@@ -1,0 +1,144 @@
+{
+  "scene_version": 1,
+  "name": "Camera Systems Demo",
+  "entities": [
+    {
+      "id": "e39fd841-2c57-49d4-a558-c31880c6c9b3",
+      "name": "Player",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "tags": [
+        "player"
+      ],
+      "transform": {
+        "position": [
+          0,
+          0,
+          1
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "components": {
+        "primitive": {
+          "type": "cube"
+        },
+        "script": {
+          "path": "scripts/example_camera_systems.py",
+          "enabled": true
+        }
+      }
+    },
+    {
+      "id": "2ec69e49-3aac-455b-87c3-81085f8b208f",
+      "name": "Follow Camera",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "tags": [],
+      "transform": {
+        "position": [
+          0,
+          -7,
+          3
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "components": {
+        "camera": {
+          "fov": 60,
+          "near": 0.1,
+          "far": 2000,
+          "active": true,
+          "projection": "perspective",
+          "ortho_size": 10,
+          "rig": "follow",
+          "target": "e39fd841-2c57-49d4-a558-c31880c6c9b3",
+          "offset": [
+            0,
+            -7,
+            3
+          ],
+          "damping": 10,
+          "look_at": true,
+          "distance": 8,
+          "orbit_heading": 0,
+          "orbit_pitch": 20,
+          "orbit_min_pitch": -80,
+          "orbit_max_pitch": 80,
+          "min_distance": 1,
+          "max_distance": 100
+        }
+      }
+    },
+    {
+      "id": "ebcc14c6-a031-484d-a33a-e5acf979edcf",
+      "name": "Orbit Camera",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "tags": [],
+      "transform": {
+        "position": [
+          0,
+          -8,
+          4
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "components": {
+        "camera": {
+          "fov": 60,
+          "near": 0.1,
+          "far": 2000,
+          "active": false,
+          "projection": "perspective",
+          "ortho_size": 10,
+          "rig": "orbit",
+          "target": "e39fd841-2c57-49d4-a558-c31880c6c9b3",
+          "offset": [
+            0,
+            -6,
+            2.5
+          ],
+          "damping": 10,
+          "look_at": true,
+          "distance": 8,
+          "orbit_heading": 0,
+          "orbit_pitch": 24,
+          "orbit_min_pitch": -80,
+          "orbit_max_pitch": 80,
+          "min_distance": 1,
+          "max_distance": 100
+        }
+      }
+    }
+  ]
+}

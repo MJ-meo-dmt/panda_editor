@@ -1,0 +1,103 @@
+{
+  "scene_version": 1,
+  "name": "Intervals Render Attributes Demo",
+  "entities": [
+    {
+      "id": "systems-demo-cube",
+      "name": "Systems Demo Cube",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {"position": [0,0,0], "rotation": [0,0,0], "scale": [1,1,1]},
+      "components": {
+        "primitive": {"type": "cube"},
+        "material": {
+          "base_color": [0.18, 0.66, 0.95, 1.0],
+          "emission": [0.0, 0.0, 0.0, 1.0],
+          "specular": [0.45, 0.45, 0.45, 1.0],
+          "shininess": 24,
+          "alpha": 1.0,
+          "transparent": false,
+          "two_sided": false,
+          "unlit": false,
+          "shader_auto": true
+        },
+        "script": {"path": "scripts/example_intervals_render_attributes.py", "enabled": true},
+        "tasks_events": {
+          "enabled": true,
+          "tasks": [
+            {
+              "name": "Pulse",
+              "mode": "interval",
+              "delay": 0.5,
+              "interval": 0.75,
+              "repeat": 4,
+              "event": "pulse",
+              "signal": "",
+              "finished_event": "pulse_finished",
+              "finished_signal": "",
+              "payload": {"source": "authored"},
+              "enabled": true,
+              "autostart": true
+            }
+          ],
+          "events": []
+        },
+        "intervals": {
+          "enabled": true,
+          "clips": [
+            {
+              "name": "Move + Turn",
+              "composition": "sequence",
+              "autostart": false,
+              "loop": false,
+              "play_rate": 1.0,
+              "finished_event": "interval_done",
+              "finished_signal": "",
+              "enabled": true,
+              "steps": [
+                {"type": "move", "target": "self", "duration": 1.0, "to": [3,0,0], "blend": "easeInOut"},
+                {"type": "rotate", "target": "self", "duration": 0.8, "to": [90,0,0], "blend": "easeInOut"},
+                {"type": "wait", "duration": 0.25},
+                {"type": "move", "target": "self", "duration": 1.0, "to": [0,0,0], "blend": "easeInOut"},
+                {"type": "rotate", "target": "self", "duration": 0.8, "to": [0,0,0], "blend": "easeInOut"}
+              ]
+            }
+          ]
+        },
+        "render_attributes": {
+          "enabled": true,
+          "depth_test": true,
+          "depth_write": true,
+          "cull": "back",
+          "transparency": "inherit",
+          "color_scale": [1.0,1.0,1.0,1.0],
+          "bin": "inherit",
+          "sort": 0,
+          "depth_offset": 0,
+          "billboard": "none",
+          "light_off": false,
+          "shader_off": false
+        },
+        "signals": {
+          "outputs": [
+            {"name": "demo_done", "connections": []}
+          ]
+        }
+      },
+      "tags": []
+    },
+    {
+      "id": "systems-demo-light",
+      "name": "Key Light",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {"position": [3,-4,6], "rotation": [-35,-20,0], "scale": [1,1,1]},
+      "components": {
+        "light": {"type": "directional", "color": [1.0,0.95,0.84,1.0], "intensity": 1.25, "enabled": true, "shadows": false}
+      },
+      "tags": []
+    }
+  ]
+}

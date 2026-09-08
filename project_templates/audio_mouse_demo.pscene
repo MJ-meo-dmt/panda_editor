@@ -1,0 +1,49 @@
+{
+  "scene_version": 1,
+  "name": "Audio Mouse Demo",
+  "entities": [
+    {
+      "id": "audio_demo_entity",
+      "name": "Audio Mouse Demo",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {
+        "position": [
+          0,
+          0,
+          1
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "components": {
+        "primitive": {
+          "type": "cube"
+        },
+        "audio_source": {
+          "clip": "assets/audio/demo_tone.wav",
+          "bus": "sfx",
+          "volume": 0.8,
+          "loop": false,
+          "autoplay": true,
+          "spatial": false,
+          "min_distance": 1.0,
+          "max_distance": 40.0
+        },
+        "script": {
+          "path": "scripts/example_mouse_audio.py",
+          "enabled": true
+        }
+      }
+    }
+  ]
+}

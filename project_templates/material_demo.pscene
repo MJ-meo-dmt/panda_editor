@@ -1,0 +1,168 @@
+{
+  "scene_version": 1,
+  "name": "Material Demo",
+  "entities": [
+    {
+      "id": "mat_floor",
+      "name": "Material Floor",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          5,
+          5,
+          5
+        ]
+      },
+      "components": {
+        "primitive": {
+          "type": "plane"
+        },
+        "material": {
+          "base_color": [
+            0.2,
+            0.23,
+            0.27,
+            1.0
+          ],
+          "base_texture": "",
+          "emission": [
+            0,
+            0,
+            0
+          ],
+          "specular": [
+            0.05,
+            0.05,
+            0.05
+          ],
+          "shininess": 4.0,
+          "alpha": 1.0,
+          "transparent": false,
+          "two_sided": true,
+          "unlit": false,
+          "shader_auto": true
+        }
+      }
+    },
+    {
+      "id": "mat_cube",
+      "name": "Checker Cube",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {
+        "position": [
+          0,
+          0,
+          1
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "components": {
+        "primitive": {
+          "type": "cube"
+        },
+        "material": {
+          "base_color": [
+            0.85,
+            0.95,
+            1.0,
+            1.0
+          ],
+          "base_texture": "assets/textures/material_checker.png",
+          "emission": [
+            0.0,
+            0.02,
+            0.05
+          ],
+          "specular": [
+            0.35,
+            0.35,
+            0.35
+          ],
+          "shininess": 24.0,
+          "alpha": 1.0,
+          "transparent": false,
+          "two_sided": false,
+          "unlit": false,
+          "shader_auto": true
+        }
+      }
+    },
+    {
+      "id": "mat_glass",
+      "name": "Transparent Cube",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {
+        "position": [
+          2,
+          0,
+          1
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "components": {
+        "primitive": {
+          "type": "cube"
+        },
+        "material": {
+          "base_color": [
+            0.25,
+            0.7,
+            1.0,
+            0.4
+          ],
+          "base_texture": "",
+          "emission": [
+            0.0,
+            0.05,
+            0.08
+          ],
+          "specular": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "shininess": 48.0,
+          "alpha": 0.4,
+          "transparent": true,
+          "two_sided": true,
+          "unlit": false,
+          "shader_auto": true
+        }
+      }
+    }
+  ]
+}

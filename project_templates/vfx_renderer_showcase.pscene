@@ -1,0 +1,507 @@
+{
+  "scene_version": 1,
+  "name": "vfx_renderer_showcase",
+  "entities": [
+    {
+      "name": "Floor",
+      "id": "7772eb7a95454e4192cbe64c4c38c91b",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          6,
+          6,
+          6
+        ]
+      },
+      "components": {
+        "primitive": {
+          "type": "plane"
+        }
+      },
+      "tags": []
+    },
+    {
+      "name": "Main Camera",
+      "id": "7cf661a3b866455c96d8a320fc46dd23",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {
+        "position": [
+          0,
+          -8,
+          4
+        ],
+        "rotation": [
+          0,
+          -18,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "components": {
+        "camera": {
+          "fov": 60,
+          "near": 0.1,
+          "far": 2000,
+          "active": true,
+          "projection": "perspective",
+          "ortho_size": 10
+        }
+      },
+      "tags": []
+    },
+    {
+      "name": "Sprite Smoke",
+      "id": "f872b2e4a5b2448b90f4742f3cae0dc1",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {
+        "position": [
+          -3,
+          0,
+          1
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "components": {
+        "particle_emitter": {
+          "enabled": true,
+          "autoplay": true,
+          "loop": true,
+          "rate": 18.0,
+          "burst_count": 24,
+          "lifetime": 1.4,
+          "speed": 2.5,
+          "spread": 35.0,
+          "gravity": [
+            0,
+            0,
+            -1.5
+          ],
+          "shape": "sphere_volume",
+          "radius": 0.25,
+          "inner_radius": 0.0,
+          "box_size": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "size_start": 0.16,
+          "size_end": 0.04,
+          "color_start": [
+            0.7,
+            0.75,
+            0.8,
+            0.8
+          ],
+          "color_end": [
+            0.2,
+            0.25,
+            0.3,
+            0
+          ],
+          "texture": "assets/textures/particle_soft.png",
+          "max_particles": 256,
+          "speed_variation": 0.2,
+          "lifetime_variation": 0.1,
+          "drag": 0.05,
+          "duration": 0.0,
+          "local_space": false,
+          "rotation_start": 0.0,
+          "rotation_speed": 60.0,
+          "blend_mode": "alpha",
+          "emit_signal_finished": true,
+          "factory_type": "zspin",
+          "mass": 1.0,
+          "mass_variation": 0.0,
+          "terminal_velocity": 0.0,
+          "renderer_type": "sprite",
+          "renderer_model": "",
+          "line_length": 0.35,
+          "line_thickness": 2.0,
+          "sparkle_scale": 1.0,
+          "point_size": 0.08,
+          "emission_angle": 360.0,
+          "velocity_mode": "outward"
+        }
+      },
+      "tags": []
+    },
+    {
+      "name": "Point Sparks",
+      "id": "12be457ffd9d48aeb83d55f1ea508b6c",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {
+        "position": [
+          -1.5,
+          0,
+          1
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "components": {
+        "particle_emitter": {
+          "enabled": true,
+          "autoplay": true,
+          "loop": true,
+          "rate": 18.0,
+          "burst_count": 24,
+          "lifetime": 1.4,
+          "speed": 2.5,
+          "spread": 35.0,
+          "gravity": [
+            0,
+            0,
+            -4
+          ],
+          "shape": "point",
+          "radius": 0.25,
+          "inner_radius": 0.0,
+          "box_size": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "size_start": 0.16,
+          "size_end": 0.04,
+          "color_start": [
+            1,
+            0.75,
+            0.2,
+            1
+          ],
+          "color_end": [
+            1,
+            0.1,
+            0,
+            0
+          ],
+          "texture": "assets/textures/particle_soft.png",
+          "max_particles": 256,
+          "speed_variation": 0.2,
+          "lifetime_variation": 0.1,
+          "drag": 0.05,
+          "duration": 0.0,
+          "local_space": false,
+          "rotation_start": 0.0,
+          "rotation_speed": 60.0,
+          "blend_mode": "additive",
+          "emit_signal_finished": true,
+          "factory_type": "zspin",
+          "mass": 1.0,
+          "mass_variation": 0.0,
+          "terminal_velocity": 0.0,
+          "renderer_type": "point",
+          "renderer_model": "",
+          "line_length": 0.35,
+          "line_thickness": 2.0,
+          "sparkle_scale": 1.0,
+          "point_size": 0.05,
+          "emission_angle": 360.0,
+          "velocity_mode": "outward"
+        }
+      },
+      "tags": []
+    },
+    {
+      "name": "Line Streaks",
+      "id": "7338222592ed489882729466b84b797e",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {
+        "position": [
+          0,
+          0,
+          1
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "components": {
+        "particle_emitter": {
+          "enabled": true,
+          "autoplay": true,
+          "loop": true,
+          "rate": 18.0,
+          "burst_count": 24,
+          "lifetime": 1.4,
+          "speed": 2.5,
+          "spread": 35.0,
+          "gravity": [
+            0,
+            0,
+            -1
+          ],
+          "shape": "disc",
+          "radius": 0.25,
+          "inner_radius": 0.0,
+          "box_size": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "size_start": 0.16,
+          "size_end": 0.04,
+          "color_start": [
+            1,
+            0.55,
+            0.12,
+            1
+          ],
+          "color_end": [
+            0.22,
+            0.06,
+            0.02,
+            0
+          ],
+          "texture": "assets/textures/particle_soft.png",
+          "max_particles": 256,
+          "speed_variation": 0.2,
+          "lifetime_variation": 0.1,
+          "drag": 0.05,
+          "duration": 0.0,
+          "local_space": false,
+          "rotation_start": 0.0,
+          "rotation_speed": 60.0,
+          "blend_mode": "additive",
+          "emit_signal_finished": true,
+          "factory_type": "zspin",
+          "mass": 1.0,
+          "mass_variation": 0.0,
+          "terminal_velocity": 0.0,
+          "renderer_type": "line",
+          "renderer_model": "",
+          "line_length": 0.45,
+          "line_thickness": 2.5,
+          "sparkle_scale": 1.0,
+          "point_size": 0.08,
+          "emission_angle": 360.0,
+          "velocity_mode": "outward"
+        }
+      },
+      "tags": []
+    },
+    {
+      "name": "Sparkle Burst",
+      "id": "09064111cbc04300b4d1b6f72c806e33",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {
+        "position": [
+          1.5,
+          0,
+          1
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "components": {
+        "particle_emitter": {
+          "enabled": true,
+          "autoplay": true,
+          "loop": true,
+          "rate": 10,
+          "burst_count": 24,
+          "lifetime": 1.4,
+          "speed": 1.8,
+          "spread": 35.0,
+          "gravity": [
+            0,
+            0,
+            -1.5
+          ],
+          "shape": "sphere_surface",
+          "radius": 0.25,
+          "inner_radius": 0.0,
+          "box_size": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "size_start": 0.16,
+          "size_end": 0.04,
+          "color_start": [
+            1,
+            0.55,
+            0.12,
+            1
+          ],
+          "color_end": [
+            0.22,
+            0.06,
+            0.02,
+            0
+          ],
+          "texture": "assets/textures/particle_soft.png",
+          "max_particles": 256,
+          "speed_variation": 0.2,
+          "lifetime_variation": 0.1,
+          "drag": 0.05,
+          "duration": 0.0,
+          "local_space": false,
+          "rotation_start": 0.0,
+          "rotation_speed": 60.0,
+          "blend_mode": "additive",
+          "emit_signal_finished": true,
+          "factory_type": "zspin",
+          "mass": 1.0,
+          "mass_variation": 0.0,
+          "terminal_velocity": 0.0,
+          "renderer_type": "sparkle",
+          "renderer_model": "",
+          "line_length": 0.35,
+          "line_thickness": 2.0,
+          "sparkle_scale": 1.4,
+          "point_size": 0.08,
+          "emission_angle": 360.0,
+          "velocity_mode": "outward"
+        }
+      },
+      "tags": []
+    },
+    {
+      "name": "Geom Placeholder",
+      "id": "b4ee575c936c4effa25e82a833012e52",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {
+        "position": [
+          3,
+          0,
+          1
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "components": {
+        "particle_emitter": {
+          "enabled": true,
+          "autoplay": true,
+          "loop": true,
+          "rate": 6,
+          "burst_count": 24,
+          "lifetime": 1.4,
+          "speed": 1.0,
+          "spread": 35.0,
+          "gravity": [
+            0,
+            0,
+            -1.5
+          ],
+          "shape": "ring",
+          "radius": 0.25,
+          "inner_radius": 0.0,
+          "box_size": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "size_start": 0.16,
+          "size_end": 0.04,
+          "color_start": [
+            1,
+            0.55,
+            0.12,
+            1
+          ],
+          "color_end": [
+            0.22,
+            0.06,
+            0.02,
+            0
+          ],
+          "texture": "assets/textures/particle_soft.png",
+          "max_particles": 256,
+          "speed_variation": 0.2,
+          "lifetime_variation": 0.1,
+          "drag": 0.05,
+          "duration": 0.0,
+          "local_space": false,
+          "rotation_start": 0.0,
+          "rotation_speed": 60.0,
+          "blend_mode": "alpha",
+          "emit_signal_finished": true,
+          "factory_type": "zspin",
+          "mass": 1.0,
+          "mass_variation": 0.0,
+          "terminal_velocity": 0.0,
+          "renderer_type": "geom",
+          "renderer_model": "",
+          "line_length": 0.35,
+          "line_thickness": 2.0,
+          "sparkle_scale": 1.0,
+          "point_size": 0.08,
+          "emission_angle": 360.0,
+          "velocity_mode": "outward"
+        }
+      },
+      "tags": []
+    }
+  ],
+  "metadata": {}
+}

@@ -1,0 +1,220 @@
+{
+  "scene_version": 1,
+  "name": "Character Controller Demo",
+  "entities": [
+    {
+      "id": "9c4d78e0-9df3-4e0b-bbc7-80921cac7f8f",
+      "name": "Floor",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "tags": [],
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          8,
+          8,
+          8
+        ]
+      },
+      "components": {
+        "primitive": {
+          "type": "plane"
+        },
+        "collider": {
+          "shape": "box",
+          "size": [
+            2,
+            2,
+            0.08
+          ],
+          "radius": 0.5,
+          "height": 1,
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "trigger": false,
+          "enabled": true,
+          "layer": 0,
+          "mask": 4294967295
+        },
+        "rigid_body": {
+          "body_type": "static",
+          "mass": 1,
+          "friction": 0.7,
+          "restitution": 0,
+          "linear_damping": 0,
+          "angular_damping": 0
+        }
+      }
+    },
+    {
+      "id": "d3f95186-2bdc-428b-8c8e-d5e8d0fc9520",
+      "name": "Player",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "tags": [
+        "player"
+      ],
+      "transform": {
+        "position": [
+          0,
+          0,
+          1.2
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          0.7,
+          0.7,
+          1.4
+        ]
+      },
+      "components": {
+        "primitive": {
+          "type": "cube"
+        },
+        "collider": {
+          "shape": "capsule",
+          "size": [
+            1,
+            1,
+            1
+          ],
+          "radius": 0.45,
+          "height": 1.2,
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "trigger": false,
+          "enabled": true,
+          "layer": 1,
+          "mask": 4294967295
+        },
+        "character_controller": {
+          "radius": 0.45,
+          "height": 1.2,
+          "step_height": 0.35,
+          "jump_speed": 6,
+          "fall_speed": 35,
+          "max_jump_height": 1.5
+        },
+        "script": {
+          "path": "scripts/example_character_controller.py",
+          "enabled": true
+        }
+      }
+    },
+    {
+      "id": "373c2668-9332-4f1f-aeba-15f7fac646dd",
+      "name": "Player Camera",
+      "parent": "d3f95186-2bdc-428b-8c8e-d5e8d0fc9520",
+      "enabled": true,
+      "visible": true,
+      "tags": [],
+      "transform": {
+        "position": [
+          0,
+          -7,
+          3.5
+        ],
+        "rotation": [
+          0,
+          -12,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "components": {
+        "camera": {
+          "fov": 60,
+          "near": 0.1,
+          "far": 2000,
+          "active": true,
+          "projection": "perspective",
+          "ortho_size": 10
+        }
+      }
+    },
+    {
+      "id": "a95f753f-f9b9-46b4-8e71-a80295787dac",
+      "name": "Interactable Crate",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "tags": [
+        "interactable"
+      ],
+      "transform": {
+        "position": [
+          0,
+          5,
+          0.75
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "components": {
+        "primitive": {
+          "type": "cube"
+        },
+        "collider": {
+          "shape": "box",
+          "size": [
+            1,
+            1,
+            1
+          ],
+          "radius": 0.5,
+          "height": 1,
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "trigger": false,
+          "enabled": true,
+          "layer": 3,
+          "mask": 4294967295
+        },
+        "rigid_body": {
+          "body_type": "static",
+          "mass": 1,
+          "friction": 0.5,
+          "restitution": 0,
+          "linear_damping": 0,
+          "angular_damping": 0
+        }
+      }
+    }
+  ]
+}

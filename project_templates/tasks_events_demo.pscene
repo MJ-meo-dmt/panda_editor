@@ -1,0 +1,28 @@
+{
+  "scene_version": 1,
+  "name": "Tasks Events Demo",
+  "entities": [
+    {
+      "id": "tasks-demo-controller",
+      "name": "Task Controller",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {"position": [0,0,0], "rotation": [0,0,0], "scale": [1,1,1]},
+      "components": {
+        "primitive": {"type": "cube"},
+        "script": {"path": "scripts/example_tasks_events.py", "enabled": true},
+        "tasks_events": {
+          "enabled": true,
+          "tasks": [
+            {"name":"Heartbeat","mode":"interval","delay":0.0,"interval":1.0,"repeat":-1,"event":"heartbeat","signal":"","payload":{"source":"authored"},"enabled":true,"autostart":true}
+          ],
+          "events": [
+            {"name":"heartbeat","script_event":"heartbeat","signal":"","enabled":true}
+          ]
+        }
+      },
+      "tags": []
+    }
+  ]
+}

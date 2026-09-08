@@ -1,0 +1,32 @@
+{
+  "name": "Shader Rendering Demo",
+  "entities": [
+    {
+      "id": "shader-demo-cube",
+      "name": "Shader Demo Cube",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "tags": ["shader_demo"],
+      "transform": {"position": [0, 0, 1], "rotation": [0, 0, 0], "scale": [1.5, 1.5, 1.5]},
+      "components": {
+        "primitive": {"type": "cube"},
+        "material": {"base_color": [1,1,1,1], "metallic": 0.0, "roughness": 0.5, "shader_auto": false},
+        "shader": {
+          "enabled": true,
+          "language": "glsl",
+          "vertex": "assets/shaders/pulse.vert",
+          "fragment": "assets/shaders/pulse.frag",
+          "geometry": "",
+          "priority": 20,
+          "input_priority": 0,
+          "inputs": {
+            "tint": {"type": "vec4", "value": [0.15, 0.7, 1.0, 1.0]},
+            "pulse": 1.0
+          }
+        },
+        "script": {"path": "scripts/example_shader_rendering.py", "enabled": true}
+      }
+    }
+  ]
+}

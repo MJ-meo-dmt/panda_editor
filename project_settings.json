@@ -1,0 +1,144 @@
+{
+  "gravity": [
+    0.0,
+    0.0,
+    -9.81
+  ],
+  "collision_layers": [
+    "Default",
+    "Player",
+    "Enemy",
+    "Interactable",
+    "Trigger",
+    "Projectile",
+    "Layer 6",
+    "Layer 7",
+    "Layer 8",
+    "Layer 9",
+    "Layer 10",
+    "Layer 11",
+    "Layer 12",
+    "Layer 13",
+    "Layer 14",
+    "Layer 15",
+    "Layer 16",
+    "Layer 17",
+    "Layer 18",
+    "Layer 19",
+    "Layer 20",
+    "Layer 21",
+    "Layer 22",
+    "Layer 23",
+    "Layer 24",
+    "Layer 25",
+    "Layer 26",
+    "Layer 27",
+    "Layer 28",
+    "Layer 29",
+    "Layer 30",
+    "Layer 31"
+  ],
+  "input_actions": {
+    "move_forward": [
+      "w",
+      "up"
+    ],
+    "move_backward": [
+      "s",
+      "down"
+    ],
+    "move_left": [
+      "a",
+      "left"
+    ],
+    "move_right": [
+      "d",
+      "right"
+    ],
+    "jump": [
+      "space"
+    ],
+    "interact": [
+      "e"
+    ],
+    "sprint": [
+      "shift"
+    ],
+    "turn_left": [
+      "q"
+    ],
+    "turn_right": [
+      "r"
+    ]
+  },
+  "audio_master_volume": 1.0,
+  "audio_sfx_volume": 1.0,
+  "audio_music_volume": 0.85,
+  "startup_scene": "project_templates/character_controller_demo.pscene",
+  "game_window_title": "Panda3D Game",
+  "game_window_width": 1280,
+  "game_window_height": 720,
+  "game_fullscreen": false,
+  "export_app_name": "Panda3D Game",
+  "export_executable_name": "Panda3DGame",
+  "export_version": "0.1.0",
+  "export_company": "",
+  "export_output_dir": "build_exports",
+  "export_build_type": "development",
+  "export_prefer_discrete_gpu": true,
+  "export_include_ffmpeg": true,
+  "export_package_format": "zip",
+  "export_icon_path": "",
+  "export_description": "",
+  "world_background_color": [
+    0.028,
+    0.036,
+    0.048,
+    1.0
+  ],
+  "world_ambient_color": [
+    0.38,
+    0.41,
+    0.46,
+    1.0
+  ],
+  "world_ambient_intensity": 1.0,
+  "world_sun_enabled": true,
+  "world_sun_color": [
+    0.94,
+    0.92,
+    0.86,
+    1.0
+  ],
+  "world_sun_intensity": 1.0,
+  "world_sun_hpr": [
+    -35.0,
+    -55.0,
+    0.0
+  ],
+  "world_fog_enabled": false,
+  "world_fog_mode": "exponential",
+  "world_fog_color": [
+    0.1,
+    0.13,
+    0.17,
+    1.0
+  ],
+  "world_fog_density": 0.015,
+  "world_fog_start": 25.0,
+  "world_fog_end": 180.0,
+  "world_skybox_model": "",
+  "world_shader_auto": true,
+  "world_post_bloom": false,
+  "world_post_bloom_intensity": 1.0,
+  "world_post_bloom_size": "medium",
+  "world_post_ambient_occlusion": false,
+  "world_post_ao_samples": 16,
+  "world_post_gamma": 1.0,
+  "world_post_exposure": 0.0,
+  "world_post_srgb": false,
+  "world_complexpbr_intensity": 1.0,
+  "world_complexpbr_env_res": 256,
+  "world_complexpbr_screenspace": false,
+  "world_complexpbr_static_reflections": false
+}

@@ -1,0 +1,30 @@
+{
+  "format": "panda_editor_material",
+  "version": 1,
+  "name": "Checker Material",
+  "material": {
+    "base_color": [
+      0.85,
+      0.95,
+      1.0,
+      1.0
+    ],
+    "base_texture": "assets/textures/material_checker.png",
+    "emission": [
+      0.0,
+      0.02,
+      0.05
+    ],
+    "specular": [
+      0.35,
+      0.35,
+      0.35
+    ],
+    "shininess": 24.0,
+    "alpha": 1.0,
+    "transparent": false,
+    "two_sided": false,
+    "unlit": false,
+    "shader_auto": true
+  }
+}

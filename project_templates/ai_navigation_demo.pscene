@@ -1,0 +1,200 @@
+{
+  "scene_version": 1,
+  "name": "AI Navigation Demo",
+  "entities": [
+    {
+      "id": "nav_ground",
+      "name": "Navigation Ground",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "tags": [],
+      "components": {
+        "primitive": {
+          "type": "plane"
+        },
+        "navigation_surface": {
+          "enabled": true,
+          "size": [
+            24,
+            24
+          ],
+          "override_size": false,
+          "cell_size": 1.0,
+          "diagonal": true,
+          "debug": true
+        },
+        "material": {
+          "base_color": [
+            0.12,
+            0.2,
+            0.16,
+            1
+          ],
+          "base_texture": "",
+          "metallic": 0,
+          "roughness": 0.9,
+          "normal_texture": "",
+          "emission_texture": "",
+          "occlusion_texture": "",
+          "metal_rough_texture": "",
+          "emission": [
+            0,
+            0,
+            0
+          ],
+          "specular": [
+            0.1,
+            0.1,
+            0.1
+          ],
+          "shininess": 8,
+          "alpha": 1,
+          "transparent": false,
+          "two_sided": true,
+          "unlit": false,
+          "shader_auto": true
+        }
+      }
+    },
+    {
+      "id": "player",
+      "name": "Player",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {
+        "position": [
+          6,
+          5,
+          0.75
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "tags": [
+        "player"
+      ],
+      "components": {
+        "primitive": {
+          "type": "cube"
+        }
+      }
+    },
+    {
+      "id": "agent",
+      "name": "Navigation Agent",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {
+        "position": [
+          -6,
+          -5,
+          0.75
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "tags": [
+        "enemy"
+      ],
+      "components": {
+        "primitive": {
+          "type": "cube"
+        },
+        "navigation_agent": {
+          "enabled": true,
+          "surface": "nav_ground",
+          "speed": 3.5,
+          "acceleration": 12,
+          "radius": 0.35,
+          "stopping_distance": 0.25,
+          "repath_interval": 0.25,
+          "face_movement": true,
+          "movement_mode": "transform",
+          "behavior": "chase",
+          "target": "player",
+          "patrol_points": [],
+          "patrol_loop": true,
+          "flee_distance": 8,
+          "finished_event": "navigation_finished",
+          "finished_signal": "navigation_finished"
+        },
+        "script": {
+          "path": "scripts/example_ai_navigation.py",
+          "enabled": true
+        }
+      }
+    },
+    {
+      "id": "obstacle",
+      "name": "Navigation Obstacle",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {
+        "position": [
+          0,
+          0,
+          1
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          2
+        ]
+      },
+      "tags": [],
+      "components": {
+        "primitive": {
+          "type": "cube"
+        },
+        "navigation_obstacle": {
+          "enabled": true,
+          "radius": 2.0,
+          "height": 3.0,
+          "carve": true
+        }
+      }
+    }
+  ]
+}

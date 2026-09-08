@@ -1,0 +1,177 @@
+{
+  "scene_version": 1,
+  "name": "PhysicsInteractionsDemo",
+  "entities": [
+    {
+      "name": "Floor",
+      "id": "demo_floor",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          7,
+          7,
+          7
+        ]
+      },
+      "components": {
+        "primitive": {
+          "type": "plane"
+        },
+        "collider": {
+          "shape": "box",
+          "size": [
+            2,
+            2,
+            0.08
+          ],
+          "radius": 0.5,
+          "height": 1,
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "trigger": false,
+          "enabled": true,
+          "layer": 0,
+          "mask": 4294967295
+        },
+        "rigid_body": {
+          "body_type": "static",
+          "mass": 1,
+          "friction": 0.7,
+          "restitution": 0,
+          "linear_damping": 0.05,
+          "angular_damping": 0.05
+        }
+      },
+      "tags": []
+    },
+    {
+      "name": "Trigger Zone",
+      "id": "demo_trigger",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {
+        "position": [
+          0,
+          1,
+          0.65
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          2,
+          2,
+          1
+        ]
+      },
+      "components": {
+        "primitive": {
+          "type": "cube"
+        },
+        "collider": {
+          "shape": "box",
+          "size": [
+            1,
+            1,
+            1
+          ],
+          "radius": 0.5,
+          "height": 1,
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "trigger": true,
+          "enabled": true,
+          "layer": 1,
+          "mask": 4294967295
+        },
+        "script": {
+          "path": "scripts/example_physics_events.py",
+          "enabled": true
+        }
+      },
+      "tags": []
+    },
+    {
+      "name": "Falling Cube",
+      "id": "demo_cube",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {
+        "position": [
+          0,
+          1,
+          5
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "components": {
+        "primitive": {
+          "type": "cube"
+        },
+        "collider": {
+          "shape": "box",
+          "size": [
+            1,
+            1,
+            1
+          ],
+          "radius": 0.5,
+          "height": 1,
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "trigger": false,
+          "enabled": true,
+          "layer": 0,
+          "mask": 4294967295
+        },
+        "rigid_body": {
+          "body_type": "dynamic",
+          "mass": 1,
+          "friction": 0.5,
+          "restitution": 0.1,
+          "linear_damping": 0.05,
+          "angular_damping": 0.05
+        },
+        "script": {
+          "path": "scripts/example_physics_events.py",
+          "enabled": true
+        }
+      },
+      "tags": []
+    }
+  ]
+}

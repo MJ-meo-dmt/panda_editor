@@ -1,0 +1,177 @@
+{
+  "scene_version": 1,
+  "name": "Terrain Demo",
+  "entities": [
+    {
+      "id": "terrain-demo-root",
+      "name": "Landscape",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {
+        "position": [
+          -32,
+          -32,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "components": {
+        "terrain": {
+          "enabled": true,
+          "heightfield": "assets/textures/terrain_demo_height.png",
+          "size": [
+            64,
+            64
+          ],
+          "height_scale": 12,
+          "block_size": 32,
+          "near": 24,
+          "far": 120,
+          "min_level": 0,
+          "bruteforce": false,
+          "auto_flatten": "off",
+          "border_stitching": true,
+          "collision_enabled": true,
+          "visible": true,
+          "material_paint": {
+            "enabled": false,
+            "splatmap": "",
+            "baked_albedo": "",
+            "texture_scale": 8.0,
+            "layers": [
+              {
+                "name": "Grass",
+                "albedo": "assets/textures/terrain_grass.png",
+                "tint": [
+                  0.55,
+                  0.82,
+                  0.48,
+                  1.0
+                ],
+                "roughness": 0.92,
+                "metallic": 0.0
+              },
+              {
+                "name": "Rock",
+                "albedo": "assets/textures/terrain_rock.png",
+                "tint": [
+                  0.72,
+                  0.72,
+                  0.74,
+                  1.0
+                ],
+                "roughness": 0.82,
+                "metallic": 0.0
+              },
+              {
+                "name": "Dirt",
+                "albedo": "assets/textures/terrain_dirt.png",
+                "tint": [
+                  0.62,
+                  0.42,
+                  0.24,
+                  1.0
+                ],
+                "roughness": 0.95,
+                "metallic": 0.0
+              },
+              {
+                "name": "Sand",
+                "albedo": "assets/textures/terrain_sand.png",
+                "tint": [
+                  0.88,
+                  0.79,
+                  0.56,
+                  1.0
+                ],
+                "roughness": 0.88,
+                "metallic": 0.0
+              }
+            ]
+          }
+        }
+      },
+      "tags": []
+    },
+    {
+      "id": "terrain-demo-cube",
+      "name": "Height Probe",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {
+        "position": [
+          0,
+          0,
+          8
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          0.6,
+          0.6,
+          0.6
+        ]
+      },
+      "components": {
+        "primitive": {
+          "type": "cube"
+        },
+        "script": {
+          "path": "scripts/example_terrain_controller.py",
+          "enabled": true
+        }
+      },
+      "tags": []
+    },
+    {
+      "id": "terrain-demo-light",
+      "name": "Sun",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {
+        "position": [
+          0,
+          0,
+          15
+        ],
+        "rotation": [
+          -35,
+          -45,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "components": {
+        "light": {
+          "type": "directional",
+          "color": [
+            1.0,
+            0.94,
+            0.82
+          ],
+          "intensity": 1.2
+        }
+      },
+      "tags": []
+    }
+  ]
+}

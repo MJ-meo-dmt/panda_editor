@@ -1,0 +1,773 @@
+{
+  "scene_version": 1,
+  "name": "UI_HUD_Runtime_QA",
+  "entities": [
+    {
+      "id": "ed6f00ab79de4fafb9b8d7c5c87909d3",
+      "name": "UI QA Controller",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "components": {
+        "script": {
+          "path": "scripts/example_ui_hud_runtime_qa.py",
+          "enabled": true
+        }
+      },
+      "tags": []
+    },
+    {
+      "id": "eb96fd0a73434e2a8ed59bad154523a3",
+      "name": "QA Canvas",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "components": {
+        "ui": {
+          "type": "canvas",
+          "anchor": "center",
+          "offset": [
+            0,
+            0
+          ],
+          "size": [
+            1280,
+            720
+          ],
+          "visible": true
+        }
+      },
+      "tags": []
+    },
+    {
+      "id": "ca3db986554f46ec82a955dbce527b34",
+      "name": "QA Panel",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "components": {
+        "ui": {
+          "type": "panel",
+          "anchor": "top_left",
+          "offset": [
+            24,
+            24
+          ],
+          "size": [
+            430,
+            520
+          ],
+          "color": [
+            0.025,
+            0.055,
+            0.085,
+            0.94
+          ],
+          "visible": true
+        }
+      },
+      "tags": []
+    },
+    {
+      "id": "8aa17eef0509405292f495ba4247357d",
+      "name": "QA Title",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "components": {
+        "ui": {
+          "type": "label",
+          "anchor": "top_left",
+          "offset": [
+            44,
+            42
+          ],
+          "size": [
+            360,
+            38
+          ],
+          "text": "DirectGUI Runtime QA",
+          "font_size": 24,
+          "text_color": [
+            0.78,
+            0.94,
+            1,
+            1
+          ],
+          "align": "left",
+          "visible": true
+        }
+      },
+      "tags": []
+    },
+    {
+      "id": "a6e3c09422cb41e2b3341e6285a151c8",
+      "name": "QA Button",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "components": {
+        "ui": {
+          "type": "button",
+          "anchor": "top_left",
+          "offset": [
+            44,
+            92
+          ],
+          "size": [
+            180,
+            42
+          ],
+          "text": "Button",
+          "font_size": 19,
+          "color": [
+            0.08,
+            0.34,
+            0.52,
+            1
+          ],
+          "text_color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "signal_name": "clicked",
+          "connections": [
+            {
+              "target": "ed6f00ab79de4fafb9b8d7c5c87909d3",
+              "action": "event",
+              "event": "qa_button"
+            }
+          ],
+          "enabled": true,
+          "visible": true
+        }
+      },
+      "tags": []
+    },
+    {
+      "id": "4426ee23b5a241a7beb586cb10c072d4",
+      "name": "QA Checkbox",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "components": {
+        "ui": {
+          "type": "checkbox",
+          "anchor": "top_left",
+          "offset": [
+            244,
+            92
+          ],
+          "size": [
+            170,
+            42
+          ],
+          "text": "Checkbox",
+          "font_size": 18,
+          "checked": true,
+          "color": [
+            0.1,
+            0.18,
+            0.26,
+            1
+          ],
+          "text_color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "signal_name": "changed",
+          "connections": [
+            {
+              "target": "ed6f00ab79de4fafb9b8d7c5c87909d3",
+              "action": "event",
+              "event": "qa_checkbox"
+            }
+          ],
+          "enabled": true,
+          "visible": true
+        }
+      },
+      "tags": []
+    },
+    {
+      "id": "f82a50ea3a0c49269b16fb14ef45f79c",
+      "name": "QA Progress",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "components": {
+        "ui": {
+          "type": "progress",
+          "anchor": "top_left",
+          "offset": [
+            44,
+            150
+          ],
+          "size": [
+            370,
+            32
+          ],
+          "value": 62,
+          "range": 100,
+          "color": [
+            0.12,
+            0.65,
+            0.8,
+            1
+          ],
+          "background_color": [
+            0.03,
+            0.06,
+            0.09,
+            0.96
+          ],
+          "visible": true
+        }
+      },
+      "tags": []
+    },
+    {
+      "id": "3afadd063e444f8a815b5a54575bd4fc",
+      "name": "QA Slider",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "components": {
+        "ui": {
+          "type": "slider",
+          "anchor": "top_left",
+          "offset": [
+            44,
+            202
+          ],
+          "size": [
+            370,
+            38
+          ],
+          "value": 45,
+          "min_value": 0,
+          "max_value": 100,
+          "page_size": 1,
+          "color": [
+            0.1,
+            0.55,
+            0.82,
+            1
+          ],
+          "background_color": [
+            0.04,
+            0.07,
+            0.1,
+            0.92
+          ],
+          "signal_name": "changed",
+          "connections": [
+            {
+              "target": "ed6f00ab79de4fafb9b8d7c5c87909d3",
+              "action": "event",
+              "event": "qa_slider"
+            }
+          ],
+          "enabled": true,
+          "visible": true
+        }
+      },
+      "tags": []
+    },
+    {
+      "id": "0b84bfdbfbd64151840df69e4e4be155",
+      "name": "QA Input",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "components": {
+        "ui": {
+          "type": "input",
+          "anchor": "top_left",
+          "offset": [
+            44,
+            258
+          ],
+          "size": [
+            370,
+            42
+          ],
+          "text": "",
+          "placeholder": "Type and press Enter",
+          "font_size": 18,
+          "color": [
+            0.04,
+            0.08,
+            0.12,
+            0.98
+          ],
+          "text_color": [
+            0.92,
+            0.96,
+            1,
+            1
+          ],
+          "signal_name": "submitted",
+          "connections": [
+            {
+              "target": "ed6f00ab79de4fafb9b8d7c5c87909d3",
+              "action": "event",
+              "event": "qa_input"
+            }
+          ],
+          "enabled": true,
+          "visible": true
+        }
+      },
+      "tags": []
+    },
+    {
+      "id": "715cd068db4a4ef089a8c6b91a74fb90",
+      "name": "QA Dropdown",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "components": {
+        "ui": {
+          "type": "dropdown",
+          "anchor": "top_left",
+          "offset": [
+            44,
+            316
+          ],
+          "size": [
+            370,
+            42
+          ],
+          "options": [
+            "Low",
+            "Medium",
+            "High",
+            "Ultra"
+          ],
+          "selected_index": 1,
+          "font_size": 18,
+          "color": [
+            0.08,
+            0.18,
+            0.26,
+            1
+          ],
+          "text_color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "signal_name": "changed",
+          "connections": [
+            {
+              "target": "ed6f00ab79de4fafb9b8d7c5c87909d3",
+              "action": "event",
+              "event": "qa_dropdown"
+            }
+          ],
+          "enabled": true,
+          "visible": true
+        }
+      },
+      "tags": []
+    },
+    {
+      "id": "46f1d27773594f2abbf9783d5e633b08",
+      "name": "QA Radio A",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "components": {
+        "ui": {
+          "type": "radio",
+          "anchor": "top_left",
+          "offset": [
+            44,
+            374
+          ],
+          "size": [
+            170,
+            40
+          ],
+          "text": "Mode A",
+          "font_size": 17,
+          "group": "qa_mode",
+          "selected": true,
+          "color": [
+            0.08,
+            0.16,
+            0.23,
+            1
+          ],
+          "text_color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "signal_name": "changed",
+          "connections": [
+            {
+              "target": "ed6f00ab79de4fafb9b8d7c5c87909d3",
+              "action": "event",
+              "event": "qa_radio_a"
+            }
+          ],
+          "enabled": true,
+          "visible": true
+        }
+      },
+      "tags": []
+    },
+    {
+      "id": "c8af86dfc1c84d9fac102185c4c81d39",
+      "name": "QA Radio B",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "components": {
+        "ui": {
+          "type": "radio",
+          "anchor": "top_left",
+          "offset": [
+            244,
+            374
+          ],
+          "size": [
+            170,
+            40
+          ],
+          "text": "Mode B",
+          "font_size": 17,
+          "group": "qa_mode",
+          "selected": false,
+          "color": [
+            0.08,
+            0.16,
+            0.23,
+            1
+          ],
+          "text_color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "signal_name": "changed",
+          "connections": [
+            {
+              "target": "ed6f00ab79de4fafb9b8d7c5c87909d3",
+              "action": "event",
+              "event": "qa_radio_b"
+            }
+          ],
+          "enabled": true,
+          "visible": true
+        }
+      },
+      "tags": []
+    },
+    {
+      "id": "ef280dad4af84e2099e71f72e2b01f99",
+      "name": "QA Disabled Button",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "components": {
+        "ui": {
+          "type": "button",
+          "anchor": "top_left",
+          "offset": [
+            44,
+            432
+          ],
+          "size": [
+            370,
+            40
+          ],
+          "text": "Disabled in Play",
+          "font_size": 17,
+          "color": [
+            0.15,
+            0.16,
+            0.18,
+            1
+          ],
+          "text_color": [
+            0.55,
+            0.58,
+            0.62,
+            1
+          ],
+          "signal_name": "clicked",
+          "connections": [],
+          "enabled": false,
+          "visible": true
+        }
+      },
+      "tags": []
+    },
+    {
+      "id": "ab6f41bd365f4089b611d7b6ef5119ef",
+      "name": "Main Camera",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "components": {
+        "camera": {
+          "fov": 60,
+          "near": 0.1,
+          "far": 2000,
+          "active": true,
+          "projection": "perspective",
+          "ortho_size": 10
+        }
+      },
+      "tags": []
+    }
+  ]
+}

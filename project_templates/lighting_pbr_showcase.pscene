@@ -1,0 +1,372 @@
+{
+  "scene_version": 1,
+  "name": "Lighting & PBR Showcase",
+  "entities": [
+    {
+      "id": "lightshow_floor",
+      "name": "Showcase Floor",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          8,
+          8,
+          1
+        ]
+      },
+      "components": {
+        "primitive": {
+          "type": "plane"
+        },
+        "material": {
+          "base_color": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "base_texture": "assets/textures/material_checker.png",
+          "metallic": 0.0,
+          "roughness": 0.72,
+          "normal_texture": "",
+          "emission_texture": "",
+          "occlusion_texture": "",
+          "metal_rough_texture": "",
+          "emission": [
+            0,
+            0,
+            0
+          ],
+          "specular": [
+            0.15,
+            0.15,
+            0.15
+          ],
+          "shininess": 12,
+          "alpha": 1,
+          "transparent": false,
+          "two_sided": true,
+          "unlit": false,
+          "shader_auto": true,
+          "shader_policy": "inherit",
+          "uv_scale": [
+            8.0,
+            8.0
+          ],
+          "uv_offset": [
+            0.0,
+            0.0
+          ],
+          "uv_rotation": 0.0,
+          "wrap_u": "repeat",
+          "wrap_v": "repeat",
+          "min_filter": "trilinear",
+          "mag_filter": "linear",
+          "anisotropic_degree": 8
+        }
+      }
+    },
+    {
+      "id": "lightshow_cube",
+      "name": "Metal Test Cube",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {
+        "position": [
+          -2,
+          1,
+          1
+        ],
+        "rotation": [
+          20,
+          0,
+          20
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "components": {
+        "primitive": {
+          "type": "cube"
+        },
+        "material": {
+          "base_color": [
+            0.62,
+            0.68,
+            0.76,
+            1.0
+          ],
+          "base_texture": "",
+          "metallic": 0.85,
+          "roughness": 0.22,
+          "normal_texture": "",
+          "emission_texture": "",
+          "occlusion_texture": "",
+          "metal_rough_texture": "",
+          "emission": [
+            0,
+            0,
+            0
+          ],
+          "specular": [
+            0.35,
+            0.35,
+            0.35
+          ],
+          "shininess": 48,
+          "alpha": 1,
+          "transparent": false,
+          "two_sided": false,
+          "unlit": false,
+          "shader_auto": true,
+          "shader_policy": "inherit"
+        }
+      }
+    },
+    {
+      "id": "lightshow_sphere",
+      "name": "Rough Test Sphere",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {
+        "position": [
+          2,
+          1,
+          1
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1.2,
+          1.2,
+          1.2
+        ]
+      },
+      "components": {
+        "primitive": {
+          "type": "sphere"
+        },
+        "material": {
+          "base_color": [
+            0.35,
+            0.12,
+            0.08,
+            1.0
+          ],
+          "base_texture": "",
+          "metallic": 0.15,
+          "roughness": 0.75,
+          "normal_texture": "",
+          "emission_texture": "",
+          "occlusion_texture": "",
+          "metal_rough_texture": "",
+          "emission": [
+            0,
+            0,
+            0
+          ],
+          "specular": [
+            0.2,
+            0.2,
+            0.2
+          ],
+          "shininess": 8,
+          "alpha": 1,
+          "transparent": false,
+          "two_sided": false,
+          "unlit": false,
+          "shader_auto": true,
+          "shader_policy": "inherit"
+        }
+      }
+    },
+    {
+      "id": "lightshow_spot",
+      "name": "Warm Spot Light",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {
+        "position": [
+          0,
+          -4,
+          5
+        ],
+        "rotation": [
+          0,
+          -42,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "components": {
+        "light": {
+          "type": "spot",
+          "color": [
+            1.0,
+            0.55,
+            0.22
+          ],
+          "intensity": 3.0,
+          "range": 18.0,
+          "fov": 38.0,
+          "exponent": 10.0,
+          "cast_shadows": true,
+          "shadow_resolution": 1024,
+          "shadow_near": 0.05
+        }
+      }
+    },
+    {
+      "id": "lightshow_point",
+      "name": "Cool Point Light",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {
+        "position": [
+          3,
+          -1,
+          2.8
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "components": {
+        "light": {
+          "type": "point",
+          "color": [
+            0.28,
+            0.55,
+            1.0
+          ],
+          "intensity": 1.8,
+          "range": 14.0,
+          "cast_shadows": false,
+          "shadow_resolution": 1024
+        }
+      }
+    },
+    {
+      "id": "lightshow_dir",
+      "name": "Soft Directional Light",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {
+        "position": [
+          0,
+          0,
+          5
+        ],
+        "rotation": [
+          -35,
+          -48,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "components": {
+        "light": {
+          "type": "directional",
+          "color": [
+            0.75,
+            0.82,
+            1.0
+          ],
+          "intensity": 0.55,
+          "cast_shadows": true,
+          "shadow_resolution": 1024,
+          "shadow_area": 45.0,
+          "shadow_near": 0.1,
+          "shadow_far": 140.0
+        }
+      }
+    },
+    {
+      "id": "lightshow_cam",
+      "name": "Showcase Camera",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {
+        "position": [
+          0,
+          -12,
+          6
+        ],
+        "rotation": [
+          0,
+          -18,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "components": {
+        "camera": {
+          "fov": 60,
+          "near": 0.1,
+          "far": 500,
+          "active": true,
+          "projection": "perspective",
+          "ortho_size": 10,
+          "rig": "fixed",
+          "target": "",
+          "offset": [
+            0,
+            -6,
+            2.5
+          ],
+          "damping": 8,
+          "look_at": true,
+          "distance": 8,
+          "orbit_heading": 0,
+          "orbit_pitch": 20,
+          "orbit_min_pitch": -80,
+          "orbit_max_pitch": 80,
+          "min_distance": 1,
+          "max_distance": 100
+        }
+      }
+    }
+  ]
+}

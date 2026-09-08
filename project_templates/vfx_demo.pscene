@@ -1,0 +1,190 @@
+{
+  "scene_version": 1,
+  "name": "vfx_demo",
+  "entities": [
+    {
+      "name": "Floor",
+      "id": "7772eb7a95454e4192cbe64c4c38c91b",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          6,
+          6,
+          6
+        ]
+      },
+      "components": {
+        "primitive": {
+          "type": "plane"
+        }
+      },
+      "tags": []
+    },
+    {
+      "name": "Impact FX",
+      "id": "28725ae4242a4124bc1a13256d10ffd4",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {
+        "position": [
+          0,
+          0,
+          1
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "components": {
+        "particle_emitter": {
+          "enabled": true,
+          "autoplay": true,
+          "loop": true,
+          "rate": 20,
+          "burst_count": 36,
+          "lifetime": 1.2,
+          "speed": 2.8,
+          "spread": 55,
+          "gravity": [
+            0,
+            0,
+            -2.2
+          ],
+          "shape": "sphere_volume",
+          "radius": 0.12,
+          "box_size": [
+            0.5,
+            0.5,
+            0.5
+          ],
+          "size_start": 0.14,
+          "size_end": 0.03,
+          "color_start": [
+            1,
+            0.5,
+            0.08,
+            1
+          ],
+          "color_end": [
+            0.15,
+            0.02,
+            0.01,
+            0
+          ],
+          "texture": "assets/textures/particle_soft.png",
+          "max_particles": 256,
+          "factory_type": "zspin",
+          "mass": 1.0,
+          "mass_variation": 0.15,
+          "terminal_velocity": 6.0,
+          "renderer_type": "sprite",
+          "renderer_model": "",
+          "line_length": 0.35,
+          "line_thickness": 2.0,
+          "sparkle_scale": 1.0,
+          "point_size": 0.08,
+          "inner_radius": 0.0,
+          "emission_angle": 360.0,
+          "velocity_mode": "outward",
+          "rotation_start": 0.0,
+          "rotation_speed": 90.0,
+          "blend_mode": "additive",
+          "speed_variation": 0.6,
+          "lifetime_variation": 0.2,
+          "drag": 0.15,
+          "duration": 0.0,
+          "local_space": false,
+          "emit_signal_finished": true
+        }
+      },
+      "tags": []
+    },
+    {
+      "name": "VFX Controller",
+      "id": "09145326f30b473691c5bfa7cd5b7303",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "components": {
+        "script": {
+          "path": "scripts/example_vfx_signals.py",
+          "enabled": true
+        }
+      },
+      "tags": []
+    },
+    {
+      "name": "Main Camera",
+      "id": "7cf661a3b866455c96d8a320fc46dd23",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {
+        "position": [
+          0,
+          -8,
+          4
+        ],
+        "rotation": [
+          0,
+          -18,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "components": {
+        "camera": {
+          "fov": 60,
+          "near": 0.1,
+          "far": 2000,
+          "active": true,
+          "projection": "perspective",
+          "ortho_size": 10
+        }
+      },
+      "tags": []
+    }
+  ],
+  "metadata": {}
+}

@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Panda Editor</title>
+  <link rel="stylesheet" href="css/editor.css">
+</head>
+<body data-theme="midnight">
+<div id="app">
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark">P</span><span>PANDA EDITOR</span><small>POC 0.4.36</small></div>
+    <nav class="menus">
+      <button data-menu="file">File</button><button data-menu="edit">Edit</button><button data-menu="add">Add</button><button data-menu="scene">Scene</button><button data-menu="object">Object</button><button data-menu="view">View</button><button data-menu="tools">Tools</button>
+    </nav>
+    <div class="top-actions">
+      <button class="icon-btn" id="undoBtn" title="Undo (Ctrl+Z)">↶</button>
+      <button class="icon-btn" id="redoBtn" title="Redo (Ctrl+Shift+Z)">↷</button>
+      <span class="divider"></span>
+      <button class="play standalone" id="runStandaloneBtn" title="Run current saved scene in an independent Panda3D window">▷ RUN</button><button class="play" id="playBtn" title="Play scene (F6)">▶ PLAY</button><button class="play runtime-control hidden" id="pauseBtn" title="Pause runtime">❚❚ PAUSE</button><button class="play runtime-control hidden" id="stopBtn" title="Stop runtime (F8)">■ STOP</button>
+      <button class="icon-btn" id="settingsBtn" title="Settings">⚙</button>
+    </div>
+  </header>
+
+  <div class="workspace-tabs">
+    <button class="active" data-workspace="level">Level Editing</button><button data-workspace="uihud">UI / HUD</button><button data-workspace="vfx">VFX / Particles</button><button data-workspace="sceneflow">Scene Flow</button><button data-workspace="fsm">FSM / Animation</button><button data-workspace="terrain">Terrain</button><button data-workspace="materials">Materials / Shaders</button><button data-workspace="tasks">Tasks / Events</button><button data-workspace="intervals">Intervals</button><button data-workspace="camera">Camera Systems</button><button data-workspace="navigation">AI / Navigation</button><button data-workspace="aibehavior">AI Behavior</button><button data-workspace="scripting">Scripting</button><button data-workspace="api">API Documentation</button><button data-workspace="lighting">World / Rendering</button><button data-workspace="debug">Debug</button><button data-workspace="export">Export</button>
+  </div>
+
+  <main id="workspace" class="workspace">
+    <aside id="leftPanel" class="panel left-panel">
+      <div class="panel-head"><span>SCENE OUTLINER</span><div><button id="addGroupBtn" title="Add grouping node">▦</button><button id="addEntityBtn">＋</button></div></div>
+      <div class="search"><input id="outlinerSearch" placeholder="Search scene..."></div>
+      <div id="outliner" class="outliner"></div>
+    </aside>
+    <div class="splitter vertical" id="leftSplit"></div>
+
+    <section id="center" class="center">
+      <div class="viewport-toolbar">
+        <div class="tool-group"><button class="active" id="selectToolBtn" data-tool="select" title="Select (Q)">◉</button><button id="moveToolBtn" data-tool="move" title="Move (G)">↔</button><button id="rotateToolBtn" data-tool="rotate" title="Rotate (R)">⟳</button><button id="scaleToolBtn" data-tool="scale" title="Scale (S)">⌗</button></div>
+        <div id="terrainBrushBar" class="tool-group terrain-brush-toolbar hidden"><span class="terrain-brush-label">TERRAIN</span><button data-terrain-brush-mode="raise" class="active" title="Raise terrain">▲</button><button data-terrain-brush-mode="lower" title="Lower / carve terrain">▼</button><button data-terrain-brush-mode="smooth" title="Smooth terrain">≈</button><button data-terrain-brush-mode="flatten" title="Flatten from first sampled height">━</button><span class="terrain-brush-label">PAINT</span><button data-terrain-brush-mode="paint0" title="Paint material layer 1">1</button><button data-terrain-brush-mode="paint1" title="Paint material layer 2">2</button><button data-terrain-brush-mode="paint2" title="Paint material layer 3">3</button><button data-terrain-brush-mode="paint3" title="Paint material layer 4">4</button><label>R <input id="terrainBrushRadius" type="number" min="0.25" step="0.25" value="4"></label><label>S <input id="terrainBrushStrength" type="range" min="0.05" max="1" step="0.05" value="0.5"></label><label>F <input id="terrainBrushFalloff" type="range" min="0.05" max="1" step="0.05" value="0.65"></label><button id="terrainBrushExit" title="Exit terrain sculpt mode">×</button></div><div class="tool-group"><button id="frameBtn" title="Frame selected (F)">◎</button><button id="frameAllBtn" title="Frame all (Home)">▣</button><select id="cameraPresetSelect" class="viewport-select" title="Editor camera preset"><option value="custom">Custom View</option><option value="perspective" selected>Perspective</option><option value="front">Front</option><option value="back">Back</option><option value="left">Left</option><option value="right">Right</option><option value="top">Top</option><option value="bottom">Bottom</option></select><button id="projectionBtn" title="Toggle Perspective / Orthographic">PERSP</button><button id="wireframeBtn" title="Toggle wireframe shading">WIRE</button><button id="collisionHelpersBtn" class="active" title="Toggle collider helpers">COLL</button></div>
+        <div class="viewport-info"><button id="cameraPreviewBadge" class="constraint-badge camera-preview hidden" title="Exit scene camera preview">CAMERA PREVIEW ×</button><span id="transformConstraint" class="constraint-badge hidden"></span><span class="status-dot"></span><span id="viewportStatus">Panda3D viewport</span></div>
+      </div>
+      <div id="viewportHost" class="viewport-host">
+        <div class="viewport-underlay"><span>Native Panda3D viewport</span><small>If this text remains visible after startup, check the Output panel.</small></div>
+        <div class="axis-cube"><b>Z</b><span>X</span><i>Y</i></div>
+      </div>
+      <div class="splitter horizontal" id="bottomSplit"></div>
+      <section id="bottomPanel" class="bottom-panel">
+        <div class="tabs" id="bottomTabs"><button class="active" data-tab="assets">ASSETS</button><button data-tab="console">OUTPUT</button><button data-tab="problems">PROBLEMS <span id="problemCountBadge" class="problem-count-badge">0</span></button><button data-tab="scripts">SCRIPT</button><button data-tab="info">SCENE INFO</button></div>
+        <div class="bottom-content">
+          <div class="tab-pane active asset-manager" id="tab-assets">
+            <aside class="asset-sidebar">
+              <div class="asset-manager-title"><b>PROJECT</b><button id="refreshAssetsBtn" title="Refresh assets">↻</button></div>
+              <button class="asset-folder active" data-asset-category="all">▾ All Assets <span id="assetCountAll">0</span></button>
+              <button class="asset-folder" data-asset-category="models">◇ Models</button>
+              <button class="asset-folder" data-asset-category="textures">▧ Textures</button>
+              <button class="asset-folder" data-asset-category="materials">◫ Materials</button>
+              <button class="asset-folder" data-asset-category="shaders">⌁ Shaders</button>
+              <button class="asset-folder" data-asset-category="scripts">⌘ Scripts</button>
+              <button class="asset-folder" data-asset-category="prefabs">⬡ Prefabs</button>
+              <button class="asset-folder" data-asset-category="audio">♫ Audio</button>
+              <button class="asset-folder" data-asset-category="scenes">◇ Scenes</button>
+            </aside>
+            <section class="asset-main">
+              <div class="asset-toolbar">
+                <input id="assetSearch" placeholder="Search project assets...">
+                <select id="assetSort"><option value="name">Name</option><option value="type">Type</option><option value="modified">Modified</option><option value="size">Size</option></select>
+                <div class="asset-view-switch" title="Asset view"><button data-asset-view="list" title="List view">☷</button><button data-asset-view="icons" title="Compact icon view">▦</button><button data-asset-view="thumbnails" title="Thumbnail view">▧</button></div>
+                <button id="createAssetBtn" title="Create a reusable project asset">＋ Create</button><button id="newAssetFolderBtn" title="Create folder under assets/">＋ Folder</button><button id="importAssetBtn">＋ Import</button>
+              </div>
+              <div class="asset-crumb"><button id="assetUpBtn" title="Up one asset folder">↑</button><span id="assetCategoryLabel">All Assets</span><span id="assetPathLabel">assets</span><span class="grow"></span><span id="assetResultCount">0 items</span></div>
+              <div class="asset-grid" id="assetGrid"></div>
+            </section>
+            <aside class="asset-details" id="assetDetails">
+              <div class="asset-details-empty"><b>No asset selected</b><span>Select an asset to inspect it.</span></div>
+            </aside>
+          </div>
+          <div class="tab-pane console" id="tab-console"><div class="console-toolbar"><div class="console-run-state"><span class="console-live-dot"></span><b>RUNTIME OUTPUT</b><span id="outputFollowStatus">Following latest output</span></div><div class="console-actions"><button id="outputFollowBtn" class="active" title="Toggle automatic scrolling to new output">FOLLOW ✓</button><button id="outputJumpBtn" title="Jump to the latest output and resume following">LATEST ↓</button><button id="outputCopyBtn" title="Copy all Output text">COPY</button><button id="outputClearBtn" title="Clear Output">CLEAR</button></div></div><pre id="consoleOutput">Panda Editor starting...\n</pre></div>
+          <div class="tab-pane problems-pane" id="tab-problems"><div class="problems-toolbar"><div><b>PROJECT PROBLEMS</b><span id="problemsSummary">Validation has not been run.</span></div><button id="problemsValidateBtn">Run Validation</button></div><div id="problemsList" class="problems-list"><div class="asset-details-empty"><b>No validation results</b><span>Run Project Validation to inspect errors and warnings.</span></div></div></div>
+          <div class="tab-pane script-pane" id="tab-scripts">
+            <div class="script-toolbar"><span id="scriptPath">No script attached</span><button id="addScriptBtn">New + Attach</button><button id="openFullScriptBtn" disabled>Open Full Editor</button><button id="detachScriptBtn" disabled>Detach</button><button id="saveScriptBtn" disabled>Save Script</button></div>
+            <div class="quick-code-shell syntax-monokai" id="quickCodeShell"><pre id="scriptHighlight" class="code-highlight" aria-hidden="true"></pre><textarea id="scriptEditor" spellcheck="false" placeholder="Attach a Python Script component to the selected entity."></textarea></div>
+          </div>
+          <div class="tab-pane" id="tab-info"><div id="sceneInfo" class="info-grid"></div></div>
+        </div>
+      </section>
+    </section>
+
+    <div class="splitter vertical" id="rightSplit"></div>
+    <aside id="rightPanel" class="panel inspector-panel">
+      <div class="panel-head"><span>INSPECTOR</span></div>
+      <div id="inspectorEmpty" class="empty-state"><b>No object selected</b><span>Select an entity in the Outliner.</span></div>
+      <div id="inspector" class="inspector hidden">
+        <section class="inspect-section"><button class="section-head">OBJECT <span>⌃</span></button><div class="section-body object-fields">
+          <label>Name<input id="entityName"></label><div class="check-row"><label><input type="checkbox" id="entityEnabled"> Enabled</label><label><input type="checkbox" id="entityVisible"> Visible</label></div>
+        </div></section>
+        <section class="inspect-section"><button class="section-head">TRANSFORM <span>⌃</span></button><div class="section-body transform-grid" id="transformFields"></div></section>
+        <section class="inspect-section"><button class="section-head">COMPONENTS <span>⌃</span></button><div class="section-body" id="componentList"></div></section>
+        <button class="add-component" id="addComponentBtn">＋ Add Component</button>
+      </div>
+    </aside>
+  </main>
+
+
+  <section id="uiHudWorkspace" class="special-workspace ui-hud-workspace hidden">
+    <aside class="ui-hud-list-pane">
+      <div class="workspace-pane-head"><b>UI / HUD</b><span id="uiHudCount">0</span></div>
+      <div class="workspace-search"><input id="uiHudSearch" placeholder="Search UI entities..."></div>
+      <div class="ui-hud-palette">
+        <div class="ui-hud-palette-group"><small>LAYOUT</small><div class="ui-hud-adds"><button data-ui-add="ui_canvas"><span>▣</span>Canvas</button><button data-ui-add="ui_panel"><span>▤</span>Panel</button></div></div>
+        <div class="ui-hud-palette-group"><small>DISPLAY</small><div class="ui-hud-adds"><button data-ui-add="ui_label"><span>T</span>Label</button><button data-ui-add="ui_image"><span>◇</span>Image</button><button data-ui-add="ui_progress"><span>▰</span>Progress</button></div></div>
+        <div class="ui-hud-palette-group"><small>INPUT</small><div class="ui-hud-adds"><button data-ui-add="ui_button"><span>▢</span>Button</button><button data-ui-add="ui_checkbox"><span>☑</span>Checkbox</button><button data-ui-add="ui_slider"><span>↔</span>Slider</button><button data-ui-add="ui_input"><span>⌨</span>Text Input</button><button data-ui-add="ui_dropdown"><span>▾</span>Dropdown</button><button data-ui-add="ui_radio"><span>◉</span>Radio</button></div></div>
+      </div>
+      <div id="uiHudEntityList" class="ui-hud-entity-list"></div>
+    </aside>
+    <section class="ui-hud-designer-pane">
+      <div class="ui-hud-toolbar">
+        <b id="uiHudResolutionLabel">1280 × 720 DESIGN SURFACE</b><span class="grow"></span>
+        <button id="uiHudGridBtn" title="Toggle grid">Grid</button><button id="uiHudSafeBtn" title="Toggle 5% title/action safe guide">Safe Area</button>
+        <label>Snap <select id="uiHudSnapSelect"><option value="1">1 px</option><option value="4">4 px</option><option value="8">8 px</option><option value="16">16 px</option><option value="32">32 px</option></select></label>
+        <span id="uiHudSnapLabel">8px</span>
+        <button id="uiHudZoomOut" title="Zoom out">−</button><span id="uiHudZoomLabel">70%</span><button id="uiHudZoomIn" title="Zoom in">＋</button>
+      </div>
+      <div class="ui-hud-canvas-scroll"><div id="uiHudStage" class="ui-hud-stage" data-grid="1"></div></div>
+      <div class="ui-hud-designer-status"><span id="uiHudDesignerStatus">Drag to move · lower-right handle to resize · anchored offsets remain canonical</span><span class="grow"></span><span id="uiHudRuntimeParity">Runtime parity · Panda3D aspect2d / DirectGUI</span></div>
+    </section>
+    <aside class="ui-hud-properties-pane">
+      <div class="workspace-pane-head"><b>UI PROPERTIES</b></div>
+      <div id="uiHudSelection" class="ui-hud-selection"><b>No UI entity selected</b><span>Select one from the canvas or list.</span></div>
+      <div class="ui-hud-help"><b>Authoring tools</b><span>Use the design surface for placement and size, then use the property panel for anchors, exact pixel values and text. Relevant UI component and signal controls are available here; Level Editing keeps only scene/3D tools that make sense there.</span></div>
+    </aside>
+  </section>
+
+
+  <section id="vfxWorkspace" class="special-workspace vfx-workspace hidden">
+    <aside class="vfx-list-pane">
+      <div class="workspace-pane-head"><b>VFX / PARTICLES</b><span id="vfxCount">0</span></div>
+      <div class="workspace-search"><input id="vfxSearch" placeholder="Search particle emitters..."></div>
+      <div class="vfx-adds"><button id="vfxAddEmitterBtn">＋ Particle Emitter</button></div>
+      <div id="vfxEmitterList" class="vfx-emitter-list"></div>
+    </aside>
+    <section class="vfx-main-pane">
+      <div class="vfx-preview-toolbar"><b>ISOLATED PARTICLE PREVIEW</b><button id="vfxPreviewOrbitLeft" title="Orbit left">↶ Orbit</button><button id="vfxPreviewOrbitRight" title="Orbit right">Orbit ↷</button><button id="vfxPreviewPanLeft" title="Pan left">← Pan</button><button id="vfxPreviewPanRight" title="Pan right">Pan →</button><button id="vfxPreviewFocus" title="Focus/reset preview">Focus</button><button id="vfxPreviewZoomOut" title="Zoom out">−</button><button id="vfxPreviewZoomIn" title="Zoom in">＋</button><span class="vfx-preview-separator"></span><button id="vfxPreviewGridBtn" title="Toggle preview grid">Grid</button><button id="vfxPreviewAxesBtn" title="Toggle preview axes">Axes</button><span id="vfxPreviewState" class="vfx-preview-state">STOPPED</span><span class="grow"></span><button id="vfxPreviewStartBtn">▶ Preview</button><button id="vfxPreviewBurstBtn">Burst</button><button id="vfxPreviewStopBtn">■ Stop</button><button id="vfxPreviewClearBtn">Clear</button></div>
+      <div id="vfxPreviewHost" class="vfx-preview-host"><div class="vfx-preview-label">Isolated Panda3D preview · MMB orbit · Shift+MMB pan · Wheel zoom</div><div class="vfx-preview-empty">Select an emitter to preview it in an isolated scene.</div></div>
+      <div class="vfx-hero compact"><small>AUTHORING VFX</small><h1>Particle Emitters</h1><p>Edit against an isolated Panda3D preview scene. The game scene stays out of the way while you tune the effect.</p></div>
+      <div id="vfxEditor" class="vfx-editor"></div>
+    </section>
+    <aside class="vfx-side-pane">
+      <div class="workspace-pane-head"><b>WORKFLOW</b></div>
+      <div class="context-card"><h3>Signal / Hook Target</h3><div id="vfxIncomingHooks" class="workspace-hook-list"><span class="muted">Select an emitter.</span></div></div><div class="context-card"><h3>Connect UI Button</h3><div id="vfxQuickHook" class="workspace-quick-hook"></div></div>
+      <div class="context-card"><h3>Script API</h3><p><code>entity.particles_start()</code><br><code>entity.particles_stop()</code><br><code>entity.particles_burst()</code></p></div>
+      <button id="vfxOpenLevelBtn" class="workspace-action">Open Selected in Level Editor</button>
+    </aside>
+  </section>
+
+  <section id="sceneFlowWorkspace" class="special-workspace scene-flow-workspace hidden">
+    <aside class="scene-flow-list-pane">
+      <div class="workspace-pane-head"><b>SCENES</b><span id="sceneFlowCount">0</span></div>
+      <div class="workspace-search"><input id="sceneFlowSearch" placeholder="Search project scenes..."></div>
+      <div id="sceneFlowList" class="scene-flow-list"></div>
+    </aside>
+    <section class="scene-flow-main">
+      <div class="lighting-hero"><small>GAME FLOW</small><h1>Scene Flow</h1><p>Choose the startup scene, open authored scenes, test standalone flow and wire runtime scene transitions through Signals 2.0.</p></div>
+      <div id="sceneFlowEditor" class="scene-flow-card"></div>
+      <div class="scene-flow-card"><div class="workspace-section-title">SIGNALS 2.0</div><p>Scene actions are now first-class signal targets: <code>scene_load</code>, <code>scene_restart</code> and <code>game_quit</code>. Scripts can also emit named entity signals using <code>entity.signal(...)</code>.</p><div id="sceneFlowConnections" class="scene-flow-help"></div></div>
+    </section>
+    <aside class="scene-flow-context">
+      <div class="workspace-pane-head"><b>RUNTIME API</b></div>
+      <section class="context-card"><h3>Scene control</h3><p><code>world.load_scene(path)</code><br><code>world.restart_scene()</code><br><code>world.quit_game()</code></p></section>
+      <section class="context-card"><h3>Signals</h3><p><code>entity.signal(name, payload)</code><br><code>world.signal(sender, name, payload)</code></p></section>
+      <button id="sceneFlowRunBtn" class="workspace-action">Run Startup Scene</button>
+    </aside>
+  </section>
+
+  <section id="fsmWorkspace" class="special-workspace fsm-workspace hidden">
+    <aside class="fsm-list-pane"><div class="workspace-pane-head"><b>FSM / ANIMATION</b><span id="fsmCount">0</span></div><div class="workspace-search"><input id="fsmSearch" placeholder="Search state machines..."></div><button id="fsmAddComponentBtn" class="workspace-primary">＋ Add FSM to Selected</button><div id="fsmEntityList" class="fsm-entity-list"></div></aside>
+    <section class="fsm-editor-pane"><div class="workspace-pane-head"><b>STATE MACHINE</b><span id="fsmCurrentState">Runtime: —</span></div><div id="fsmEditor" class="fsm-editor"><div class="api-empty">Select an entity with an FSM component.</div></div></section>
+    <aside class="fsm-context-pane"><div class="workspace-pane-head"><b>INTEGRATION</b></div><div class="context-card"><h3>Animation Mapping</h3><p>Each state can play a named Actor clip with its own loop and rate settings.</p></div><div class="context-card"><h3>Script API</h3><p><code>entity.fsm_state</code><br><code>entity.fsm_request()</code><br><code>entity.fsm_send()</code></p></div><button id="fsmOpenLevelBtn">Open Selected in Level Editor</button></aside>
+  </section>
+
+  <section id="terrainWorkspace" class="special-workspace terrain-workspace hidden">
+    <aside class="terrain-list-pane"><div class="workspace-pane-head"><b>TERRAIN</b><span id="terrainCount">0</span></div><div class="workspace-search"><input id="terrainSearch" placeholder="Search terrain entities..."></div><button id="terrainAddBtn" class="workspace-primary">＋ Add Terrain</button><div id="terrainEntityList" class="terrain-entity-list"></div></aside>
+    <section class="terrain-main-pane"><div class="terrain-hero"><small>HEIGHTFIELD / GEOMIP LOD</small><h1>Terrain System</h1><p>Author Panda3D GeoMipTerrain heightfields with world scale, LOD, collision and runtime query support. Terrain remains an entity component, so hierarchy, scripts, signals and transforms continue to work normally.</p></div><div id="terrainEditor" class="terrain-editor"><div class="api-empty">Select or add a Terrain entity.</div></div></section>
+    <aside class="terrain-context-pane"><div class="workspace-pane-head"><b>TERRAIN CONTEXT</b></div><section class="context-card"><h3>Runtime API</h3><p><code>entity.terrain_height(x, y)</code><br><code>entity.terrain_normal(x, y)</code><br><code>entity.terrain_configure(...)</code><br><code>entity.terrain_regenerate()</code></p></section><section class="context-card"><h3>Sculpting</h3><p class="muted">Editor-generated grayscale heightfields can be sculpted in the Level viewport with Raise, Lower, Smooth and Flatten brushes. Brush radius is authored in world units and each drag is undoable.</p></section><section class="context-card"><h3>GeoMip LOD</h3><p class="muted">Block size plus near/far distances control adaptive mesh detail. Bruteforce disables LOD for inspection or small terrains.</p></section><section class="context-card"><h3>Collision</h3><p class="muted">Optional static Bullet triangle-mesh collision is generated from the terrain geometry when Play starts.</p></section><button id="terrainOpenLevelBtn" class="workspace-action">Open Selected in Level Editor</button></aside>
+  </section>
+
+  <section id="materialsWorkspace" class="special-workspace material-workspace hidden">
+    <aside class="material-list-pane">
+      <div class="workspace-pane-head"><b>MATERIAL BROWSER</b><button id="materialBrowserRefresh" title="Refresh project assets">↻</button></div>
+      <div class="material-browser-tabs">
+        <button data-material-browser="scene" class="active">Scene</button>
+        <button data-material-browser="materials">Materials</button>
+        <button data-material-browser="textures">Textures</button>
+        <button data-material-browser="shaders">Shaders</button>
+      </div>
+      <div class="workspace-search"><input id="materialSearch" placeholder="Search materials / textures / shaders..."></div>
+      <div id="materialEntityList" class="material-browser-list"></div>
+      <div id="materialBrowserActions" class="material-browser-actions"></div>
+    </aside>
+    <section class="material-main-pane">
+      <div class="material-workbench-head"><div><small>MATERIAL / SHADER AUTHORING</small><h1>Material / Shader Editor</h1><p>Connectable shader nodes and a dedicated isolated Panda3D material preview in one workspace.</p></div></div>
+      <div class="material-workbench">
+        <div class="material-graph-pane"><div id="materialEditor" class="material-editor"><div class="api-empty">Select an entity with a Material component.</div></div></div>
+        <div class="material-preview-pane">
+          <div class="material-preview-toolbar"><b>LIVE MATERIAL PREVIEW</b><label>Mesh<select id="materialPreviewMesh"><option value="sphere">Sphere</option><option value="cube">Cube</option><option value="plane">Plane</option></select></label><label>Light<select id="materialPreviewLight"><option value="studio">Studio</option><option value="neutral">Neutral</option><option value="dark">Dark</option></select></label><button id="materialPreviewOrbitLeft">↶</button><button id="materialPreviewOrbitRight">↷</button><button id="materialPreviewZoomOut">−</button><button id="materialPreviewZoomIn">＋</button><button id="materialPreviewFocus">Focus</button></div>
+          <div id="materialPreviewHost" class="material-preview-host"><div class="material-preview-label">ISOLATED MATERIAL PREVIEW</div><div class="material-preview-empty">Select a material to preview.</div></div>
+          <div class="material-preview-status"><span id="materialPreviewPipeline">Built-in</span><span>Changes preview after Apply Graph to Material</span></div>
+        </div>
+      </div>
+    </section>
+    <aside class="material-context-pane">
+      <div class="workspace-pane-head"><b>PIPELINE</b></div>
+      <section class="context-card"><h3>PBR Direction</h3><p class="muted"><b>simplepbr</b> is the preferred baseline integration: forward metal/rough PBR, normal/emission/occlusion maps, shadows, tone mapping and IBL while staying close to Panda's normal scene graph. RenderPipeline remains a future advanced/deferred option rather than the editor baseline.</p></section>
+      <section class="context-card"><h3>Graph Contract</h3><div class="world-roadmap"><span>Texture Sample</span><span>Color / Scalar</span><span>Math / Mix</span><span>Principled Surface</span><span>Material Output</span></div></section>
+    </aside>
+  </section>
+
+  <section id="tasksWorkspace" class="special-workspace terrain-workspace hidden">
+    <aside class="terrain-list-pane"><div class="workspace-pane-head"><b>TASKS / EVENTS</b><span id="tasksCount">0</span></div><div class="workspace-search"><input id="tasksSearch" placeholder="Search task/event entities..."></div><button id="tasksAddComponentBtn" class="workspace-primary">＋ Add to Selected</button><div id="tasksEntityList" class="terrain-entity-list"></div></aside>
+    <section class="terrain-main-pane"><div class="terrain-hero"><small>MANAGED RUNTIME FLOW</small><h1>Tasks / Events</h1><p>Author pause-aware timers and named custom events without hand-writing update-loop timers. Tasks feed the existing script <code>on_event()</code> and Signals 2.0 systems.</p></div><div id="tasksEditor" class="terrain-editor"><div class="api-empty">Select an entity with a Tasks / Events component.</div></div></section>
+    <aside class="terrain-context-pane"><div class="workspace-pane-head"><b>RUNTIME API</b></div><section class="context-card"><h3>How timers execute</h3><p class="muted"><b>Runtime-created</b> <code>task_every()</code> timers start immediately. Event-style timers arrive in <code>on_event()</code>. Direct method timers use <code>method="..."</code> and call <code>method(self, entity, world, payload)</code>.</p><button id="tasksOpenGuideBtn" class="workspace-action">Open Task Execution Guide</button></section><section class="context-card"><h3>Managed timers</h3><p><code>world.call_later()</code><br><code>world.task_every()</code><br><code>world.task_cancel()</code><br><code>world.task_info()</code><br><code>entity.task_start()</code> <span class="muted">(authored tasks)</span></p></section><section class="context-card"><h3>Runnable example</h3><p class="muted">Open the light-flicker script to see a repeating direct method callback changing live light intensity and range.</p><button id="tasksOpenFlickerExampleBtn" class="workspace-action">Open Light Flicker Script</button><button id="tasksOpenFlickerDemoBtn" class="workspace-action">Open Flicker Demo Scene</button></section><section class="context-card"><h3>Custom events</h3><p><code>world.event_send()</code><br><code>entity.event_send()</code></p><p class="muted">Authored hooks route named Panda messenger events into script events and optional Signals 2.0 outputs.</p></section><button id="tasksOpenLevelBtn" class="workspace-action">Open Selected in Level Editor</button></aside>
+  </section>
+
+  <section id="intervalsWorkspace" class="special-workspace terrain-workspace hidden">
+    <aside class="terrain-list-pane"><div class="workspace-pane-head"><b>INTERVALS</b><span id="intervalsCount">0</span></div><div class="workspace-search"><input id="intervalsSearch" placeholder="Search interval entities..."></div><button id="intervalsAddComponentBtn" class="workspace-primary">＋ Add to Selected</button><div id="intervalsEntityList" class="terrain-entity-list"></div></aside>
+    <section class="terrain-main-pane"><div class="terrain-hero"><small>PANDA3D SCRIPTED MOTION</small><h1>Intervals</h1><p>Build finite authored actions using Sequence or Parallel composition. Move, rotate, scale, wait, animation, sound, custom events and Signals can be combined without hand-written timing loops.</p></div><div id="intervalsEditor" class="terrain-editor"><div class="api-empty">Select an entity with an Intervals component.</div></div></section>
+    <aside class="terrain-context-pane"><div class="workspace-pane-head"><b>INTERVAL API</b></div><section class="context-card"><h3>Entity</h3><p><code>entity.interval_start()</code><br><code>entity.interval_pause()</code><br><code>entity.interval_resume()</code><br><code>entity.interval_finish()</code></p></section><section class="context-card"><h3>Runtime composition</h3><p><code>world.interval_sequence()</code><br><code>world.interval_parallel()</code></p><p class="muted">Authored actions use Panda3D's Interval system and pause with Play Mode.</p></section><button id="intervalsOpenLevelBtn" class="workspace-action">Open Selected in Level Editor</button></aside>
+  </section>
+
+  <section id="cameraWorkspace" class="special-workspace terrain-workspace hidden">
+    <aside class="terrain-list-pane"><div class="workspace-pane-head"><b>CAMERA SYSTEMS</b><span id="cameraCount">0</span></div><div class="workspace-search"><input id="cameraSearch" placeholder="Search cameras..."></div><button id="cameraAddComponentBtn" class="workspace-primary">＋ Add Camera to Selected</button><div id="cameraEntityList" class="terrain-entity-list"></div></aside>
+    <section class="terrain-main-pane"><div id="cameraEditor" class="terrain-editor"><div class="api-empty">Select an entity with a Camera component.</div></div></section>
+    <aside class="terrain-context-pane"><div class="workspace-pane-head"><b>CAMERA API</b></div><section class="context-card"><h3>Activation / Blend</h3><p><code>entity.camera_activate()</code><br><code>world.camera_blend_to()</code></p></section><section class="context-card"><h3>Rigs</h3><p><code>entity.camera_follow()</code><br><code>entity.camera_orbit()</code><br><code>entity.camera_orbit_input()</code></p></section><section class="context-card"><h3>Effects</h3><p><code>entity.camera_shake()</code><br><code>world.camera_shake()</code></p></section><p class="muted">Fixed cameras use the authored transform. Follow, Orbit and Look At rigs are evaluated only in Play Mode and do not modify the authored scene transform.</p><button id="cameraOpenLevelBtn" class="workspace-action">Open Selected in Level Editor</button></aside>
+  </section>
+
+  <section id="navigationWorkspace" class="special-workspace hidden terrain-workspace">
+    <aside class="terrain-list-pane"><div class="workspace-pane-head"><b>AI / NAVIGATION</b><span id="navigationCount">0</span></div><div class="workspace-search"><input id="navigationSearch" placeholder="Search navigation entities..."></div><div class="world-settings-actions"><button id="navigationAddSurfaceBtn">＋ Surface</button><button id="navigationAddAgentBtn">＋ Agent to Selected</button><button id="navigationAddObstacleBtn">＋ Obstacle to Selected</button></div><div id="navigationEntityList" class="terrain-entity-list"></div></aside>
+    <section class="terrain-main-pane"><div id="navigationEditor" class="terrain-editor"><div class="api-empty">Add/select a navigation component.</div></div></section>
+    <aside class="terrain-context-pane"><div class="workspace-pane-head"><b>NAVIGATION API</b></div><section class="context-card"><h3>Path Queries</h3><p><code>world.navigation_find_path()</code><br><code>world.navigation_nearest_point()</code></p></section><section class="context-card"><h3>Agent</h3><p><code>entity.navigation_set_target()</code><br><code>navigation_patrol()</code><br><code>navigation_chase()</code><br><code>navigation_flee()</code></p></section><section class="context-card"><h3>Foundation</h3><p>Navigation uses an editor-owned grid/A* layer. It can sit on ordinary surfaces or Terrain, incorporates authored obstacle carving, and deliberately stays separate from later AI Behavior/FSM work.</p></section><button id="navigationOpenLevelBtn" class="workspace-action">Open Selected in Level Editor</button></aside>
+  </section>
+
+  <section id="aiBehaviorWorkspace" class="special-workspace hidden terrain-workspace">
+    <aside class="terrain-list-pane"><div class="workspace-pane-head"><b>AI BEHAVIOR</b><span id="aiBehaviorCount">0</span></div><div class="workspace-search"><input id="aiBehaviorSearch" placeholder="Search AI entities..."></div><button id="aiBehaviorAddBtn" class="workspace-primary">＋ Add to Selected</button><div id="aiBehaviorEntityList" class="terrain-entity-list"></div></aside>
+    <section class="terrain-main-pane"><div class="terrain-hero"><small>PERCEPTION · DECISION · FSM · NAVIGATION</small><h1>AI Behavior</h1><p>Author high-level decisions on top of Navigation and FSM. Perception acquires targets, state decisions drive patrol/chase/attack/flee/search, and state maps can synchronize directly to authored FSM animation states.</p></div><div id="aiBehaviorEditor" class="terrain-editor"><div class="api-empty">Select an entity with an AI Behavior component.</div></div></section>
+    <aside class="terrain-context-pane"><div class="workspace-pane-head"><b>AI API</b></div><section class="context-card"><h3>Behavior</h3><p><code>entity.ai_state</code><br><code>entity.ai_set_state()</code><br><code>entity.ai_set_target()</code><br><code>entity.ai_think_now()</code></p></section><section class="context-card"><h3>Perception</h3><p><code>entity.ai_scan()</code><br><code>world.ai_find_targets()</code></p></section><section class="context-card"><h3>Blackboard</h3><p><code>entity.ai_blackboard</code><br><code>ai_blackboard_get()</code><br><code>ai_blackboard_set()</code></p></section><section class="context-card"><h3>Integration</h3><p>AI decisions can drive the existing Navigation Agent and mirror Idle/Patrol/Chase/Attack/Flee/Search into FSM states without replacing either subsystem.</p></section><button id="aiBehaviorOpenLevelBtn" class="workspace-action">Open Selected in Level Editor</button></aside>
+  </section>
+
+  <section id="scriptingWorkspace" class="special-workspace hidden">
+    <aside class="script-files-pane">
+      <div class="workspace-pane-head"><b>PROJECT SCRIPTS</b><button id="newWorkspaceScriptBtn" title="Create Python script">＋</button></div>
+      <div class="workspace-search"><input id="scriptFileSearch" placeholder="Search scripts..."></div>
+      <div id="scriptFileList" class="script-file-list"></div>
+    </aside>
+    <section class="script-editor-workspace">
+      <div class="script-workspace-toolbar"><div><b id="workspaceScriptName">No script open</b><small id="workspaceScriptPath">Select a project script.</small></div><span class="grow"></span><label class="syntax-theme-label">Syntax<select id="syntaxThemeSelect"><option value="monokai">Monokai</option><option value="midnight">Midnight Python</option><option value="light">Light Python</option></select></label><button id="workspaceFindBtn" title="Find / Replace (Ctrl+F)">Find</button><button id="workspaceCheckScriptBtn">Check Syntax</button><button id="workspaceApiBtn">API Docs</button><button id="workspaceSaveScriptBtn" disabled>Save <kbd>Ctrl+S</kbd></button></div>
+      <div id="scriptFindBar" class="script-find-bar hidden"><input id="scriptFindInput" placeholder="Find..."><input id="scriptReplaceInput" placeholder="Replace..."><button id="scriptFindPrevBtn" title="Previous match">↑</button><button id="scriptFindNextBtn" title="Next match">↓</button><button id="scriptReplaceBtn">Replace</button><button id="scriptReplaceAllBtn">All</button><span id="scriptFindStatus">0 matches</span><button id="scriptFindCloseBtn" title="Close">×</button></div>
+      <div class="code-shell"><div id="scriptLineNumbers" class="line-numbers">1</div><div class="code-editor-stack syntax-monokai" id="workspaceCodeStack"><pre id="workspaceScriptHighlight" class="code-highlight" aria-hidden="true"></pre><textarea id="workspaceScriptEditor" spellcheck="false" placeholder="# Select a Python script from the left."></textarea></div></div>
+      <div class="script-runtime-strip"><span>PYTHON ENTITY SCRIPT</span><span id="workspaceScriptState">Ready</span><span class="grow"></span><span>Play reloads saved scripts automatically</span></div>
+    </section>
+    <aside class="script-context-pane">
+      <div class="workspace-pane-head"><b>SCRIPT CONTEXT</b></div>
+      <section class="context-card selected-script-card"><h3>Selected Entity</h3><div id="selectedScriptEntity" class="selected-script-entity"><span class="muted">No scene entity selected.</span></div><div class="script-context-actions"><button id="attachOpenScriptBtn">Attach Open Script</button><button id="newAttachScriptBtn">New + Attach</button><button id="detachSelectedScriptBtn">Detach</button></div></section>
+      <section class="context-card"><h3>Attached Entities</h3><div id="scriptAttachments" class="attachment-list"><span class="muted">No script selected.</span></div></section>
+      <section class="context-card"><h3>Script File</h3><div class="script-context-actions"><button id="deleteWorkspaceScriptBtn" class="danger-soft">Delete File</button></div><p class="muted">Deleting a file is separate from detaching it. Attached files are protected from deletion.</p></section>
+      <section class="context-card"><h3>Lifecycle</h3><button class="api-jump" data-api-jump="EntityScript.on_start">on_start(entity, world)</button><button class="api-jump" data-api-jump="EntityScript.on_update">on_update(entity, world, dt)</button><button class="api-jump" data-api-jump="EntityScript.on_event">on_event(...)</button><button class="api-jump" data-api-jump="EntityScript.on_stop">on_stop(entity, world)</button></section>
+      <section class="context-card beginner-example-card"><h3>Beginner · Keyboard + Mouse</h3><p class="muted">A readable free-fly camera example for learning input, inspecting scenes and development/showcase navigation.</p><div class="script-context-actions"><button id="openFlyCameraExampleBtn">Open Fly Camera Script</button><button id="openFlyCameraTemplateBtn">Open Demo Scene</button></div><small>WASD · Space/C · Shift · Mouse Look · Esc · Left Click</small></section>
+      <section class="context-card"><h3>Quick API</h3><button class="api-jump" data-api-jump="entity.position">entity.position</button><button class="api-jump" data-api-jump="entity.character_move">entity.character_move()</button><button class="api-jump" data-api-jump="entity.character_rotation">character_rotation</button><button class="api-jump" data-api-jump="entity.character_turn">character_turn()</button><button class="api-jump" data-api-jump="entity.character_turn_to">character_turn_to()</button><button class="api-jump" data-api-jump="entity.character_face_direction">character_face_direction()</button><button class="api-jump" data-api-jump="world.action_down">world.action_down()</button><button class="api-jump" data-api-jump="world.key_pressed">key_pressed()</button><button class="api-jump" data-api-jump="world.mouse_delta">mouse_delta</button><button class="api-jump" data-api-jump="world.mouse_captured">mouse_captured</button><button class="api-jump" data-api-jump="world.raycast">world.raycast()</button><button class="api-jump" data-api-jump="world.find_all">world.find_all()</button><button class="api-jump" data-api-jump="entity.apply_torque">apply_torque()</button><button class="api-jump" data-api-jump="world.emit">world.emit()</button><button class="api-jump" data-api-jump="entity.particles_configure">particles_configure()</button><button class="api-jump" data-api-jump="entity.fsm_send">fsm_send()</button><button class="api-jump" data-api-jump="entity.terrain_height">terrain_height()</button><button class="api-jump" data-api-jump="world.call_later">call_later()</button><button class="api-jump" data-api-jump="world.event_send">event_send()</button><button class="api-jump" data-api-jump="world.task_info">task_info()</button><button class="api-jump" data-api-jump="entity.interval_start">interval_start()</button><button class="api-jump" data-api-jump="entity.render_set">render_set()</button><button class="api-jump" data-api-jump="entity.shader_set_input">shader_set_input()</button><button class="api-jump" data-api-jump="world.post_process_set">post_process_set()</button><button class="api-jump" data-api-jump="entity.camera_activate">camera_activate()</button><button class="api-jump" data-api-jump="entity.camera_orbit">camera_orbit()</button><button class="api-jump" data-api-jump="world.camera_blend_to">camera_blend_to()</button><button class="api-jump" data-api-jump="entity.ai_behavior">ai_state / target</button><button class="api-jump" data-api-jump="entity.ai_set_state">ai_set_state()</button><button class="api-jump" data-api-jump="world.ai_find_targets">ai_find_targets()</button></section>
+    </aside>
+  </section>
+
+
+  <section id="lightingWorkspace" class="special-workspace lighting-workspace world-workspace hidden">
+    <aside class="lighting-list-pane world-left-pane">
+      <div class="workspace-pane-head"><b>WORLD / SCENE</b></div>
+      <div class="world-nav">
+        <button class="active" data-world-section="environment">Environment</button>
+        <button data-world-section="lights">Scene Lights</button>
+        <button data-world-section="rendering">Rendering</button>
+        <button data-world-section="performance">Performance / Culling / LOD</button>
+        <button data-world-section="pipeline">Shader / PBR</button>
+      </div>
+      <div class="workspace-pane-head"><b>SCENE LIGHTS</b><div><button id="addPointLightWorkspace" title="Add Point Light">＋P</button><button id="addSpotLightWorkspace" title="Add Spot Light">＋S</button><button id="addDirectionalLightWorkspace" title="Add Directional Light">＋D</button></div></div>
+      <div class="workspace-search"><input id="lightingSearch" placeholder="Search scene lights..."></div>
+      <div id="lightingEntityList" class="lighting-entity-list"></div>
+    </aside>
+    <section class="lighting-overview world-overview">
+      <div class="lighting-hero"><small>WORLD / ENVIRONMENT / RENDERING</small><h1>Scene & Rendering</h1><p>Global environment, sky, fog, fallback lighting and rendering controls belong here. Scene lights remain available below as authored entities.</p></div>
+      <div id="worldEnvironmentEditor" class="world-settings-card"></div>
+      <div id="worldPerformanceEditor" class="world-settings-card"></div>
+      <div class="lighting-stats" id="lightingStats"></div>
+      <div class="lighting-editor-card" id="lightingEditor"><div class="api-empty">Select a scene light from the left to edit it.</div></div>
+    </section>
+    <aside class="lighting-context-pane world-context-pane">
+      <div class="workspace-pane-head"><b>WORLD CONTEXT</b></div>
+      <section class="context-card"><h3>Rendering Pipeline</h3><p class="muted"><b>Built-in</b> is the compatibility baseline. <b>simplepbr</b> is the lightweight PBR path. <b>complexpbr</b> adds IBL/reflections and optional advanced screenspace effects, but requires GLSL 4.30+ hardware.</p></section>
+      <section class="context-card"><h3>Planned Post FX</h3><div class="world-roadmap"><span>Bloom</span><span>Tone Mapping</span><span>FXAA / SMAA</span><span>SSAO</span><span>Color Grading</span><span>PBR Environment</span></div></section>
+      <section class="context-card"><h3>Signal / Hook Target</h3><div id="lightingIncomingHooks" class="workspace-hook-list"><span class="muted">Select a light.</span></div></section>
+      <section class="context-card"><h3>Connect UI Button</h3><div id="lightingQuickHook" class="workspace-quick-hook"><span class="muted">Select a light.</span></div></section>
+    </aside>
+  </section>
+
+  <section id="debugWorkspace" class="special-workspace debug-workspace hidden">
+    <aside class="debug-side">
+      <div class="workspace-pane-head"><b>DEBUG VISUALS</b></div>
+      <div class="debug-controls">
+        <label><input id="debugColliderHelpers" type="checkbox" checked> Authoring Collider Helpers</label>
+        <label><input id="debugBullet" type="checkbox"> Bullet Debug Renderer</label>
+        <label><input id="debugFpsMeter" type="checkbox"> Panda FPS Meter</label>
+      </div>
+      <div class="workspace-pane-head"><b>PSTATS</b></div>
+      <div class="debug-actions"><button id="launchPstatsBtn">Launch PStats Server</button><button id="connectPstatsBtn">Connect Panda Client</button><small>PStats remains an external Panda tool in this pass; the workspace provides launch/connect control and runtime telemetry.</small></div>
+    </aside>
+    <section class="debug-main">
+      <div class="lighting-hero"><small>RUNTIME / AUTHORING INSPECTION</small><h1>Debug Workspace</h1><p>Visual diagnostics and lightweight runtime telemetry. This is intentionally not a full debugger.</p></div>
+      <div id="debugStats" class="debug-stats"></div>
+      <div class="debug-card"><h3>Physics & Collision</h3><p>Use authoring collider helpers outside Play Mode and Panda3D BulletDebugNode during Play Mode. Bullet debug can show rigid-body wireframes, constraints and bounds.</p></div>
+      <div class="debug-card"><h3>Project Validation</h3><p>Check scene resource references and Python syntax before packaging or sharing the project.</p><button id="validateProjectBtn">Run Validation</button><div id="projectValidationResults" class="project-validation-results"></div></div><div class="debug-card"><h3>Distribution Readiness</h3><div id="distributionStatus"></div><button id="revealBuildFilesBtn">Reveal Build Files</button></div>
+    </section>
+    <aside class="debug-side debug-right"><div class="workspace-pane-head"><b>LIVE RUNTIME</b></div><div id="runtimeDebugDetails" class="debug-runtime-list"></div><div class="workspace-pane-head"><b>NOTES</b></div><div class="debug-notes">PStats is Panda3D's dedicated performance profiler. This workspace surfaces useful live counters and controls, while detailed timing remains in PStats.</div></aside>
+  </section>
+
+
+  <section id="exportWorkspace" class="special-workspace export-workspace hidden">
+    <aside class="export-side export-left">
+      <div class="workspace-pane-head"><b>WINDOWS EXPORT</b></div>
+      <div class="export-platform active"><span class="export-platform-icon">▣</span><div><b>Windows x64</b><small>win_amd64 · Panda3D build_apps</small></div></div>
+      <section class="context-card"><h3>Pipeline</h3><p class="muted">Uses the same standalone runtime proven by Run Standalone. Editor UI, pywebview, gizmos and authoring tools are not included in the game build.</p></section>
+      <section class="context-card"><h3>Build Stages</h3><div class="export-stage-list"><span>1 · Validate project</span><span>2 · Generate build manifest</span><span>3 · Fetch Panda wheels</span><span>4 · Freeze Python runtime</span><span>5 · Convert GLB/glTF/EGG → BAM</span><span>6 · Assemble win_amd64 build</span></div></section>
+    </aside>
+    <section class="export-main">
+      <div class="export-hero"><small>DISTRIBUTION</small><h1>Windows Game Export</h1><p>Build a self-contained Windows x64 game from the current Panda Editor project using Panda3D's official build_apps pipeline.</p></div>
+      <div class="export-grid">
+        <section class="export-card"><h3>Application</h3><div class="export-fields"><label>Application Name<input id="exportAppName"></label><label>Executable Name<input id="exportExeName"></label><label>Version<input id="exportVersion" placeholder="0.1.0"></label><label>Company / Studio<input id="exportCompany" placeholder="Optional"></label><label class="wide">Product Description<input id="exportDescription" placeholder="Optional game description"></label><label class="wide">Startup Scene<input id="exportStartupScene" readonly></label></div></section>
+        <section class="export-card"><h3>Build Profile</h3><div class="export-fields"><label>Build Type<select id="exportBuildType"><option value="development">Development · console + diagnostics</option><option value="release">Release · GUI + AppData log</option></select></label><label>Package Format<select id="exportPackageFormat"><option value="zip">ZIP archive</option><option value="nsis">NSIS installer</option></select></label><label class="wide">Output Directory<input id="exportOutputDir" value="build_exports"></label><label class="check-setting"><input id="exportDiscreteGpu" type="checkbox"> Prefer dedicated GPU</label><label class="check-setting"><input id="exportFfmpeg" type="checkbox"> Include FFmpeg media plug-in</label></div><p class="settings-help">Folder builds use build_apps. Package builds use Panda3D bdist_apps. NSIS requires makensis.exe on PATH.</p></section>
+        <section class="export-card"><h3>Application Icon</h3><div class="export-icon-row"><div id="exportIconPreview" class="export-icon-preview">P</div><div class="export-icon-meta"><b id="exportIconName">Default Panda icon</b><small id="exportIconPath">No custom icon configured.</small><div class="export-actions left"><button id="exportChooseIconBtn">Choose Icon…</button><button id="exportClearIconBtn">Clear</button></div></div></div><p class="settings-help">PNG/JPEG supported. A 256×256 or larger square source is recommended; Panda3D generates the Windows icon sizes.</p></section>
+        <section class="export-card"><h3>Build Optimizations</h3><div class="export-feature-list"><span><b>GLB / glTF / EGG</b><small>Automatically converted to optimized BAM during build.</small></span><span><b>Runtime-only package</b><small>Editor UI and pywebview are excluded.</small></span><span><b>Windows x64</b><small>Explicit win_amd64 target.</small></span><span><b>Runtime logging</b><small>Release errors are written under AppData/&lt;Executable&gt;/logs/output.log.</small></span></div></section>
+      </div>
+      <section class="export-card"><div class="export-card-head"><div><h3>Build Readiness</h3><p>Project validation plus distribution-specific checks.</p></div><button id="exportValidateBtn">Validate</button></div><div id="exportValidationResults" class="export-validation-results"><span class="muted">Validation has not been run yet.</span></div></section>
+      <section class="export-card export-output-card"><div class="export-card-head"><div><h3>Build Output</h3><p id="exportBuildState">Idle</p></div><div class="export-actions"><button id="exportCleanBtn">Clean</button><button id="exportRevealBtn">Reveal Build</button><button id="exportRevealPackagesBtn">Reveal Packages</button><button id="exportRevealLogBtn">Release Log</button><button id="exportCancelBtn" disabled>Cancel</button><button id="exportBuildBtn">Build Folder</button><button class="primary" id="exportPackageBtn">Build & Package</button></div></div><pre id="exportBuildOutput" class="export-build-output">Ready. Validate the project, then build.</pre></section>
+    </section>
+    <aside class="export-side export-right"><div class="workspace-pane-head"><b>BUILD SUMMARY</b></div><div id="exportSummary" class="export-summary"></div><section class="context-card"><h3>0.3.8 Distribution</h3><p class="muted">Folder build, ZIP packaging, optional NSIS installer, custom application icon, Release logging and build artifact reporting.</p></section></aside>
+  </section>
+
+  <section id="apiWorkspace" class="special-workspace api-workspace hidden">
+    <aside class="api-nav-pane">
+      <div class="workspace-pane-head"><b>API DOCUMENTATION</b></div>
+      <div class="api-search-wrap"><input id="apiSearch" placeholder="Search API, e.g. particles, FSM, animation, raycast..."><span id="apiResultCount"></span></div>
+      <div id="apiCategories" class="api-categories"></div>
+    </aside>
+    <section class="api-content-pane">
+      <div class="api-content-head"><div><small>PANDA EDITOR SCRIPTING API</small><h1 id="apiTitle">API Documentation</h1><p id="apiSubtitle">Search or select an API entry from the left.</p></div><button id="apiBackToScriptBtn">← Scripting</button></div>
+      <div id="apiEntryContent" class="api-entry-content"></div>
+    </section>
+    <aside class="api-index-pane">
+      <div class="workspace-pane-head"><b>ON THIS PAGE</b></div>
+      <section class="context-card"><h3>START HERE / GUIDES</h3><button class="api-jump" data-api-jump="tasks.execution_model">Tasks: events vs methods</button><button class="api-jump" data-api-jump="EntityScript.on_event">Script event callback shape</button><button class="api-jump" data-api-jump="world.action_down">Input actions</button><button class="api-jump" data-api-jump="entity.light_api">Runtime lights</button></section>
+      <div id="apiQuickIndex" class="api-quick-index"></div>
+      <section class="context-card api-note"><h3>Runtime Model</h3><p>Scripts execute only during Play Mode against the runtime scene copy. Stop discards runtime mutations and restores the authoring scene.</p></section>
+    </aside>
+  </section>
+
+  <footer class="statusbar"><span id="sceneName">Untitled.pscene</span><span id="dirtyStatus">Saved</span><span id="runtimeStatus" class="runtime-status hidden">PLAYING</span><span class="grow"></span><span>Grid 1.0m</span><span id="entityCount">0 Entities</span><span>Panda3D</span></footer>
+</div>
+
+<div class="popover hidden" id="fileMenu"><button id="newSceneBtn">New Scene <kbd>Ctrl+N</kbd></button><button id="openSceneBtn">Open Scene… <kbd>Ctrl+O</kbd></button><button id="saveSceneBtn">Save Scene <kbd>Ctrl+S</kbd></button><hr><button id="importModelMenuBtn">Import Model…</button><hr><button id="exitEditorBtn">Exit Panda Editor</button></div>
+<div class="popover hidden" id="addMenu"><button data-add="group">Group</button><hr><button data-add="empty">Empty</button><button data-add="cube">Cube</button><button data-add="plane">Plane</button><button data-add="sphere">Sphere</button><hr><button data-add="camera">Camera</button><button data-add="point_light">Point Light</button><button data-add="spot_light">Spot Light</button><button data-add="directional_light">Directional Light</button><hr><button data-add="ui_canvas">UI Canvas</button><button data-add="ui_panel">UI Panel</button><button data-add="ui_label">UI Label</button><button data-add="ui_image">UI Image</button><button data-add="ui_button">UI Button</button><button data-add="ui_checkbox">UI Checkbox</button><button data-add="ui_progress">UI Progress</button><button data-add="ui_slider">UI Slider</button><button data-add="ui_input">UI Text Input</button><button data-add="ui_dropdown">UI Dropdown</button><button data-add="ui_radio">UI Radio</button><hr><button data-add="particle_emitter">Particle Emitter</button><button data-add="terrain">Terrain</button></div>
+<div class="popover hidden" id="editMenu"><button id="editUndoBtn">Undo <kbd>Ctrl+Z</kbd></button><button id="editRedoBtn">Redo <kbd>Ctrl+Shift+Z</kbd></button></div>
+<div class="popover hidden" id="sceneMenu"><button id="projectSettingsBtn">Project Settings…</button><hr><button id="setStartupSceneBtn">Set Current as Startup Scene</button><button id="runStandaloneMenuBtn">Run Standalone</button><hr><button id="openExportWorkspaceBtn">Export Windows…</button></div>
+<div class="popover hidden" id="objectMenu"><button id="duplicateMenuBtn">Duplicate <kbd>Ctrl+D</kbd></button><button id="unparentMenuBtn">Clear Parent</button><hr><button id="createPrefabMenuBtn">Create Prefab from Selection</button><hr><button id="deleteMenuBtn">Delete <kbd>Del</kbd></button></div>
+<div class="popover hidden" id="viewMenu"><button id="frameMenuBtn">Frame Selected <kbd>F</kbd></button><button id="frameAllMenuBtn">Frame All <kbd>Home</kbd></button><hr><button data-camera-preset="front">Front View</button><button data-camera-preset="back">Back View</button><button data-camera-preset="left">Left View</button><button data-camera-preset="right">Right View</button><button data-camera-preset="top">Top View</button><button data-camera-preset="bottom">Bottom View</button><button data-camera-preset="perspective">Perspective View</button><hr><button id="projectionMenuBtn">Toggle Projection</button><button id="wireframeMenuBtn">Toggle Wireframe</button><hr><button id="gridHelpersMenuBtn">✓ Editor Grid</button><button id="axesHelpersMenuBtn">✓ World Axes</button><button id="sceneHelpersMenuBtn">✓ Scene Helpers</button><button id="collisionHelpersMenuBtn">✓ Collision Helpers</button></div>
+<div class="popover hidden" id="toolsMenu"><button id="toolsValidateBtn">Run Project Validation</button><button id="toolsProblemsBtn">Open Problems</button><hr><button id="toolsApiBtn">API Documentation</button><button id="toolsDebugBtn">Debug Workspace</button><hr><button id="toolsProjectSettingsBtn">Project Settings…</button><button id="toolsEditorSettingsBtn">Editor Settings…</button></div>
+<div class="popover hidden" id="outlinerContext"><button id="ctxSelect">Select</button><button id="ctxDuplicate">Duplicate Selection / Subtrees</button><button id="ctxCreateGroup">Create Group Under</button><button id="ctxUnparent">Clear Parent</button><hr><button id="ctxDelete" class="danger-soft">Delete Selection / Subtrees</button></div>
+<div class="popover hidden" id="assetCreateMenu"><button data-asset-create="material">◫ Material</button><button data-asset-create="shader">⌁ GLSL Shader Pair</button><button data-asset-create="script">⌘ Python Script</button><hr><small class="popover-note">Reusable project assets are created without adding a scene object.</small></div>
+<div class="popover component-browser hidden" id="componentMenu" role="dialog" aria-label="Add Component">
+  <div class="component-browser-head">
+    <div><b>ADD COMPONENT</b><small id="componentBrowserEntity">Selected entity</small></div>
+    <kbd>Esc</kbd>
+  </div>
+  <div class="component-browser-search"><span>⌕</span><input id="componentSearch" type="text" autocomplete="off" spellcheck="false" placeholder="Search components…"></div>
+  <div class="component-browser-categories" id="componentCategoryBar"></div>
+  <div class="component-browser-list" id="componentBrowserList"></div>
+  <div class="component-browser-foot"><span id="componentBrowserStatus">Choose a component to add.</span><kbd>↑ ↓ Enter</kbd></div>
+</div>
+
+<div class="modal hidden" id="settingsModal"><div class="modal-card"><header><h2>Editor Settings</h2><button class="close" data-close="settingsModal">×</button></header><div class="settings-grid">
+<label>Theme<select id="themeSelect"><option value="midnight">Midnight</option><option value="dark">Dark</option><option value="graphite">Graphite</option><option value="light">Light</option></select></label>
+<label>Font Scale<input id="fontScale" type="range" min="0.8" max="1.35" step="0.05"><output id="fontScaleValue"></output></label>
+<label>UI Scale<input id="uiScale" type="range" min="0.85" max="1.25" step="0.05"><output id="uiScaleValue"></output></label>
+<label class="check-setting"><input id="showGrid" type="checkbox"> Show viewport grid</label>
+<label class="check-setting"><input id="snapEnabled" type="checkbox"> Enable snapping</label>
+<label>Snap Size<input id="snapSize" type="number" min="0.01" step="0.1"></label>
+</div><footer><button data-close="settingsModal">Cancel</button><button class="primary" id="saveSettingsBtn">Save Settings</button></footer></div></div>
+
+
+<div class="modal hidden" id="projectSettingsModal"><div class="modal-card project-settings-card"><header><h2>Project Settings</h2><button class="close" data-close="projectSettingsModal">×</button></header><div class="project-settings-body">
+<section><h3>Application / Runtime</h3><div class="settings-grid compact"><label class="wide">Startup Scene<input id="startupScene" type="text" placeholder="project_templates/basic.pscene"></label><label class="wide">Window Title<input id="gameWindowTitle" type="text" placeholder="Panda3D Game"></label><label>Width<input id="gameWindowWidth" type="number" min="320" max="7680" step="1"></label><label>Height<input id="gameWindowHeight" type="number" min="240" max="4320" step="1"></label><label class="check-setting"><input id="gameFullscreen" type="checkbox"> Fullscreen</label></div><p class="settings-help">These settings are used by the standalone runtime now and will feed the Windows Export pipeline in the next pass.</p></section><section><h3>Physics</h3><div class="settings-grid compact"><label>Gravity X<input id="gravityX" type="number" step="0.1"></label><label>Gravity Y<input id="gravityY" type="number" step="0.1"></label><label>Gravity Z<input id="gravityZ" type="number" step="0.1"></label></div></section>
+<section><h3>Audio</h3><div class="settings-grid compact"><label>Master Volume %<input id="audioMasterVolume" type="number" min="0" max="100" step="5"></label><label>SFX Volume %<input id="audioSfxVolume" type="number" min="0" max="100" step="5"></label><label>Music Volume %<input id="audioMusicVolume" type="number" min="0" max="100" step="5"></label></div><p class="settings-help">UI uses 0–100%. Internally Panda3D receives normalized 0.0–1.0 volume values.</p></section>
+<section><h3>Collision Layers</h3><div id="collisionLayerSettings" class="layer-settings"></div></section>
+<section><h3>Input Map</h3><p class="settings-help">Action names are consumed by Python through world.action_down(), action_pressed(), action_released() and action_axis(). Separate multiple keys with commas.</p><div id="inputActionSettings" class="input-action-settings"></div><button id="addInputActionBtn" class="small-action">＋ Add Action</button></section>
+</div><footer><button data-close="projectSettingsModal">Cancel</button><button class="primary" id="saveProjectSettingsBtn">Save Project Settings</button></footer></div></div>
+<div class="modal hidden" id="appDialogModal"><div class="modal-card app-dialog-card" role="dialog" aria-modal="true" aria-labelledby="appDialogTitle"><header><div><small id="appDialogEyebrow">PANDA EDITOR</small><h2 id="appDialogTitle">Confirm</h2></div><button class="close" id="appDialogClose" aria-label="Close">×</button></header><div class="app-dialog-body"><div id="appDialogIcon" class="app-dialog-icon">!</div><div class="app-dialog-copy"><p id="appDialogMessage"></p><small id="appDialogDetail" class="muted hidden"></small><input id="appDialogInput" class="hidden" autocomplete="off"></div></div><footer><button id="appDialogCancel">Cancel</button><button id="appDialogAlt" class="hidden">Don't Save</button><button class="primary" id="appDialogConfirm">OK</button></footer></div></div>
+<div id="toast" class="toast hidden"></div>
+<script src="js/editor.js"></script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+{
+  "scene_version": 1,
+  "name": "Fly Camera Showcase",
+  "entities": [
+    {
+      "id": "fly_camera",
+      "name": "Fly Camera",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "tags": ["debug_camera"],
+      "transform": {"position": [0, -12, 5], "rotation": [0, -8, 0], "scale": [1, 1, 1]},
+      "components": {
+        "camera": {
+          "fov": 70, "near": 0.05, "far": 3000, "active": true,
+          "projection": "perspective", "ortho_size": 10,
+          "rig": "fixed", "target": "", "offset": [0, -6, 2.5],
+          "damping": 8, "look_at": false, "distance": 8,
+          "orbit_heading": 0, "orbit_pitch": 20,
+          "orbit_min_pitch": -80, "orbit_max_pitch": 80,
+          "min_distance": 1, "max_distance": 100
+        },
+        "script": {"path": "scripts/example_fly_camera.py", "enabled": true}
+      }
+    },
+    {
+      "id": "show_floor",
+      "name": "Showcase Floor",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "tags": [],
+      "transform": {"position": [0, 8, 0], "rotation": [0, 0, 0], "scale": [10, 14, 1]},
+      "components": {
+        "primitive": {"type": "plane"},
+        "material": {"base_color": [0.12, 0.16, 0.21, 1.0], "base_texture": "", "emission": [0,0,0], "specular": [0.08,0.08,0.08], "shininess": 8, "alpha": 1, "transparent": false, "two_sided": true, "unlit": false, "shader_auto": true}
+      }
+    },
+    {
+      "id": "show_cube_a",
+      "name": "Reference Cube A",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "tags": [],
+      "transform": {"position": [-4, 4, 1], "rotation": [15, 0, 0], "scale": [1, 1, 1]},
+      "components": {
+        "primitive": {"type": "cube"},
+        "material": {"base_color": [0.15, 0.62, 0.92, 1.0], "base_texture": "", "emission": [0.0,0.02,0.05], "specular": [0.3,0.3,0.3], "shininess": 24, "alpha": 1, "transparent": false, "two_sided": false, "unlit": false, "shader_auto": true}
+      }
+    },
+    {
+      "id": "show_cube_b",
+      "name": "Reference Cube B",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "tags": [],
+      "transform": {"position": [4, 8, 2], "rotation": [-25, 15, 0], "scale": [1.5, 1.5, 2]},
+      "components": {
+        "primitive": {"type": "cube"},
+        "material": {"base_color": [0.92, 0.38, 0.12, 1.0], "base_texture": "", "emission": [0.03,0.005,0], "specular": [0.35,0.35,0.35], "shininess": 28, "alpha": 1, "transparent": false, "two_sided": false, "unlit": false, "shader_auto": true}
+      }
+    },
+    {
+      "id": "show_cube_c",
+      "name": "Reference Cube C",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "tags": [],
+      "transform": {"position": [0, 16, 3], "rotation": [35, 10, 20], "scale": [2, 2, 3]},
+      "components": {
+        "primitive": {"type": "cube"},
+        "material": {"base_color": [0.48, 0.24, 0.82, 1.0], "base_texture": "", "emission": [0.015,0,0.04], "specular": [0.4,0.4,0.4], "shininess": 32, "alpha": 1, "transparent": false, "two_sided": false, "unlit": false, "shader_auto": true}
+      }
+    },
+    {
+      "id": "show_sun",
+      "name": "Showcase Sun",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "tags": [],
+      "transform": {"position": [0, 0, 8], "rotation": [-35, -55, 0], "scale": [1,1,1]},
+      "components": {
+        "light": {"type": "directional", "color": [1.0, 0.95, 0.84, 1.0], "intensity": 1.25, "enabled": true, "shadows": false}
+      }
+    }
+  ]
+}

@@ -1,0 +1,231 @@
+{
+  "scene_version": 1,
+  "name": "UI_HUD_Demo",
+  "entities": [
+    {
+      "id": "445e4c548f4941f99950f3ff25cc4a8d",
+      "name": "HUD Controller",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "components": {
+        "script": {
+          "path": "scripts/example_ui_hud.py",
+          "enabled": true
+        }
+      },
+      "tags": []
+    },
+    {
+      "id": "ac81f82a257b4af1a5bc095d1122fec4",
+      "name": "HUD Panel",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "components": {
+        "ui": {
+          "type": "panel",
+          "anchor": "top_left",
+          "offset": [
+            24,
+            24
+          ],
+          "size": [
+            330,
+            150
+          ],
+          "color": [
+            0.035,
+            0.07,
+            0.11,
+            0.92
+          ],
+          "visible": true
+        }
+      },
+      "tags": []
+    },
+    {
+      "id": "816292666c084899b4c7cc544bd58b70",
+      "name": "Score Label",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "components": {
+        "ui": {
+          "type": "label",
+          "anchor": "top_left",
+          "offset": [
+            42,
+            42
+          ],
+          "size": [
+            270,
+            44
+          ],
+          "text": "Score: 0",
+          "font_size": 25,
+          "text_color": [
+            0.8,
+            0.94,
+            1,
+            1
+          ],
+          "align": "left",
+          "visible": true
+        }
+      },
+      "tags": []
+    },
+    {
+      "id": "00eecd83d7424a0ba3a139146d288c18",
+      "name": "Add Point Button",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "components": {
+        "ui": {
+          "type": "button",
+          "anchor": "top_left",
+          "offset": [
+            42,
+            92
+          ],
+          "size": [
+            180,
+            44
+          ],
+          "text": "Add Point",
+          "font_size": 20,
+          "color": [
+            0.08,
+            0.35,
+            0.55,
+            0.97
+          ],
+          "text_color": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "event_name": "add_point",
+          "enabled": true,
+          "visible": true,
+          "signal_name": "clicked",
+          "connections": [
+            {
+              "target": "445e4c548f4941f99950f3ff25cc4a8d",
+              "action": "event",
+              "event": "add_point"
+            }
+          ]
+        }
+      },
+      "tags": []
+    },
+    {
+      "id": "5667aaf4fed84e0e9c1e5d4240843b17",
+      "name": "Main Camera",
+      "parent": null,
+      "enabled": true,
+      "visible": true,
+      "transform": {
+        "position": [
+          0,
+          -12,
+          5
+        ],
+        "rotation": [
+          0,
+          -12,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      "components": {
+        "camera": {
+          "fov": 60,
+          "near": 0.1,
+          "far": 2000,
+          "active": true,
+          "projection": "perspective",
+          "ortho_size": 10
+        }
+      },
+      "tags": []
+    }
+  ]
+}
