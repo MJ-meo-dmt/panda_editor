@@ -27,7 +27,7 @@ This is a POC rather than a commercial engine or a replacement for Panda3D itsel
 For the full development history, see [`HISTORY_CHANGELOG.md`](HISTORY_CHANGELOG.md).
 
 ## Screenshots
-![Basic](images/basic.png)
+![Basic](images/Basic.png)
 ![Scripting Editor](images/Scripting_editor.png)
 ![Component Options](images/add_component_options.png)
 ![UsingSimplePbr0](images/screenshot.png)
