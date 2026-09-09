@@ -24,7 +24,7 @@ This is a POC rather than a commercial engine or a replacement for Panda3D itsel
 - In-editor Python scripting, runnable example scripts and searchable API Documentation.
 - Play Mode, Output/Problems workflow, validation, project templates and standalone/export tooling.
 
-For the full development history, see [`HISTORY_CHANGELOG.md`](HISTORY_CHANGELOG.md).
+For some of the development history, see [`HISTORY_CHANGELOG.md`](HISTORY_CHANGELOG.md).
 
 ## Screenshots
 ![Basic](images/Basic.png)
